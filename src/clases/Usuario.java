@@ -1,4 +1,4 @@
-package finaljava;
+package clases;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,7 +20,7 @@ public Usuario(){
 	//constructor vacio
 }
 	
-private static ArrayList<Usuario>listaDeusuarios = new ArrayList<>();
+public static ArrayList<Usuario>listaDeusuarios = new ArrayList<>();
 
 public String getUsuario() {
 	return usuario;
@@ -58,7 +58,7 @@ public static void setListaDeusuarios(ArrayList<Usuario> listaDeusuarios) {
 
 public Usuario altaUsuario(){
 
-    try (Scanner entrada = new Scanner(System.in)) {
+    Scanner entrada = new Scanner(System.in);
 		int dni = Excepciones.castearEntero("ingrese el dni: ");
 		Persona propietario = buscarPersona(dni);
 		if (propietario == null){
@@ -102,7 +102,7 @@ public Usuario altaUsuario(){
 		listaDeusuarios.add(nuevoUsuario);
 		System.out.println("usuario creado con exito: ");
 		return nuevoUsuario;
-	}
+	
 }
 
 public void bajaUsuario(){
@@ -118,7 +118,7 @@ public void bajaUsuario(){
 }
 
 public void modifiacarUsuario(){
-    try (Scanner entrada = new Scanner(System.in)) {
+    Scanner entrada = new Scanner(System.in);
 		int opcion;
 		boolean salir = false;
 
@@ -173,7 +173,7 @@ public void modifiacarUsuario(){
 		            return;
 		    }
 		}while (! salir);
-	}
+	
 }
 
 public Usuario buscarUsuario(int dni){
@@ -186,7 +186,7 @@ public Usuario buscarUsuario(int dni){
     return null;
 }
 
-public void listarUsuario(){
+public static void listarUsuario(ArrayList<Usuario> listaDeusuarios2){
     if (listaDeusuarios.isEmpty()){
         System.out.println("no hay usuario para mostrar: ");
     } else {
@@ -200,7 +200,7 @@ public void listarUsuario(){
 
 public void menuDeUsuario(){
 
-    try (Scanner entrada = new Scanner(System.in)) {
+    Scanner entrada = new Scanner(System.in);
 		int opcion;
 		boolean salir = false;
 		do {
@@ -224,7 +224,7 @@ public void menuDeUsuario(){
 		            modifiacarUsuario();
 		            break;
 		        case 4:
-		             listarUsuario();
+		             listarUsuario(null);
 		             break;
 		        case 5:
 		            salir = true;
@@ -237,5 +237,5 @@ public void menuDeUsuario(){
 
 		}while (! salir);
 	}
-}
+
 }

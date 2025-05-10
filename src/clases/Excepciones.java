@@ -1,4 +1,4 @@
-package finaljava;
+package clases;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;

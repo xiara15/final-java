@@ -1,4 +1,4 @@
-package finaljava;
+package clases;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -69,7 +69,7 @@ public class Venta {
 //metodos personales de venta	
 		
 		  public Venta altaVenta(){
-		        try (Scanner entrada = new Scanner(System.in)) {
+		        Scanner entrada = new Scanner(System.in);
 					int codigo = Excepciones.castearEntero("ingrese el codigo de la venta: ");
 
 					Venta ventaExistente = busquedaDeVentas(codigo);
@@ -122,7 +122,7 @@ public class Venta {
 					System.out.println("venta creada con exito: ");
 
 					return nuevaVenta;
-				}
+				
 		    }
 
 		  public void bajaDeVenta(){
@@ -136,7 +136,7 @@ public class Venta {
 		        System.out.println("la venta se elimino con exito: ");
 		    }
 		  public void modificarVenta(){
-		        try (Scanner entrada = new Scanner(System.in)) {
+		        Scanner entrada = new Scanner(System.in);
 					int codigo = Excepciones.castearEntero("ingrese el codigo de la venta: ");
 					Venta ventaExistente = busquedaDeVentas(codigo);
 					if (ventaExistente == null){
@@ -213,7 +213,7 @@ public class Venta {
 					            return;
 					    }
 					}while (!salir);
-				}
+				
 
 		        System.out.println("cambios realizados: ");
 		    }

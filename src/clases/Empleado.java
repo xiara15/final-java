@@ -1,4 +1,4 @@
-package finaljava;
+package clases;
 import java.time.LocalDate;
 import java.util.Scanner;
 	
@@ -9,7 +9,7 @@ public class Empleado extends Persona{
 	    private LocalDate fechaEgreso;
 	    private  int legajo;
 	    private double salario;
-		private Empleado[] listaEmpleados;
+		private static Empleado[] listaEmpleados;
 	
 
 	 
@@ -103,8 +103,8 @@ public void altaEmpleado(){
 }
 
 public void bajaEmpleado() {
-    try (Scanner entrada = new Scanner(System.in)) {
-	}
+    Scanner entrada = new Scanner(System.in);
+	
     int dniBuscado = Excepciones.castearEntero("ingrese el dni: ");
 
     Empleado empleadoEncontrado = null;
@@ -133,7 +133,7 @@ public void bajaEmpleado() {
 }
 
 public void modificarEmpleado(int legajo) {
-    try (Scanner scanner = new Scanner(System.in)) {
+    Scanner scanner = new Scanner(System.in);
 		// Mostrar menú de opciones para modificar
 		    System.out.println("¿Qué deseas modificar?");
 		    System.out.println("1. Nombre");
@@ -186,7 +186,7 @@ public void modificarEmpleado(int legajo) {
 		            System.out.println("Opción no válida.");
 		            break;
 		    }
-	}
+	
     }
 
 private Empleado extracted(Empleado empleado) {
@@ -219,7 +219,7 @@ public void buscarEmpleado(){
         System.out.println("no se encontro el empleado");
     }}
 
-    public void ListarEmpleado() {
+    public static void ListarEmpleado() {
         if (Empleado.length == 0) {
             System.out.println("no hay personas registradas.");
         } else {

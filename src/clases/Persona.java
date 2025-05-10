@@ -1,4 +1,4 @@
-package finaljava;
+package clases;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -123,7 +123,7 @@ public void setSexo(Sexo sexo) {
    
 //metodos personalizados para persona
 
-public Persona buscarPersona(int dni) {
+public static Persona buscarPersona(int dni) {
     for (Persona persona : listaPersonas) {
         if (persona.getDni() == dni) {
             return persona;
@@ -132,8 +132,7 @@ public Persona buscarPersona(int dni) {
     return null;
 }
 public void datosPersona(){
-    try (Scanner entrada = new Scanner(System.in)) {
-	}
+    Scanner entrada = new Scanner(System.in);
 
     int buscarDni = Excepciones.castearEntero("ingrese el dni: ");
     Persona personaEncontrada = buscarPersona(buscarDni);
@@ -154,6 +153,7 @@ public void datosPersona(){
     } else {
         System.out.println("no se encontro el DNI ingresado.");
     }
+    
 }
 
 public static void mostrarListaPersonas() {
@@ -178,7 +178,7 @@ public static void mostrarListaPersonas() {
     }
 }
 
-public void altaPersona() {
+public static void altaPersona() {
     try (Scanner entrada = new Scanner(System.in)) {
 		System.out.print("cuantas personas deseas guardar: ");
 		int cantidadPersonas = entrada.nextInt();
@@ -265,7 +265,7 @@ public void altaPersona() {
 }
 
 public void modificarPersona(){
-    try (Scanner entrada = new Scanner(System.in)) {
+     Scanner entrada = new Scanner(System.in);
 		int dniBuscado = Excepciones.castearEntero("ingrese el dni: ");
 		
 		    Persona personaEncontrada = buscarPersona(dniBuscado);
@@ -370,9 +370,9 @@ public void modificarPersona(){
 		                System.out.println("opcion no valida.");
 		        }
 		    } while (! salir);
-	}
+	
 
-System.out.println("cambios completados.");
+		System.out.println("cambios completados.");
 }
 
 
@@ -398,7 +398,7 @@ public void bajaPersona(){
 }
 
 public void menuPersona(){
-    try (Scanner entrada = new Scanner(System.in)) {
+    Scanner entrada = new Scanner(System.in);
 		int opcion;
 		boolean salir = false;
 		do {
@@ -443,7 +443,7 @@ public void menuPersona(){
 		            return;
 		    }
 		} while (!salir);
-	}
+	
 }
 
 public LocalDate getFechaDeNacimiento() {

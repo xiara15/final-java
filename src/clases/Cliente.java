@@ -1,4 +1,4 @@
-package finaljava;
+package clases;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Cliente extends Persona {
 	 
 	private static ArrayList<Cliente> listaCliente = new ArrayList<>();
-    private CuentaCorriente ctacte;
+    private static CuentaCorriente ctacte;
  
 public Cliente(int dni, boolean activo, String nombres, String apellidos,
             String telefono, String direccion, Provincia provincia, String localidad,
@@ -50,9 +50,9 @@ public void verCuentaCorriente() {
     System.out.println("saldo actual: " + saldoActual);
 }
 
-public void altaCliente() {
-	 try (Scanner entrada = new Scanner(System.in)) {
-	}
+public static void altaCliente() {
+	 Scanner entrada = new Scanner(System.in);
+	
 
      int dni = Excepciones.castearEntero("ingrese el dni del cliente: ");
 

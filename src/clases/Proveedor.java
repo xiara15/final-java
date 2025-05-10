@@ -1,4 +1,4 @@
-package finaljava;
+package clases;
 import java.time.LocalDate;
 
 public class Proveedor extends Persona{

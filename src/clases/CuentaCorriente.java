@@ -1,4 +1,4 @@
-package finaljava;
+package clases;
 import java.util.ArrayList;
 
 public class CuentaCorriente {

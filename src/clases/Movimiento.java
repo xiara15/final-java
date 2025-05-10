@@ -1,15 +1,17 @@
-package finaljava;
+package clases;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import FinalprogramacionII.MetodosGeneral;
+
 public class Movimiento {
 
-	    private int codigo;
-	    private String detalle;
+	    private static int codigo;
+	    private static String detalle;
 	    private double montoDebe;
-	    private double montoHaber;
-	    private double saldo;
+	    private static double montoHaber;
+	    private static double saldo;
 
 	    public Movimiento(int codigo, String detalle, double montoDebe, double montoHaber, double saldo) {
 	        this.codigo = codigo;
@@ -25,7 +27,7 @@ public class Movimiento {
 	    
 	    private static ArrayList<Movimiento>listaMovimiento = new ArrayList<>();
 
-		public int getCodigo() {
+		public static int getCodigo() {
 			return codigo;
 		}
 
@@ -33,7 +35,7 @@ public class Movimiento {
 			this.codigo = codigo;
 		}
 
-		public String getDetalle() {
+		public static String getDetalle() {
 			return detalle;
 		}
 
@@ -49,7 +51,7 @@ public class Movimiento {
 			this.montoDebe = montoDebe;
 		}
 
-		public double getMontoHaber() {
+		public static double getMontoHaber() {
 			return montoHaber;
 		}
 
@@ -57,7 +59,7 @@ public class Movimiento {
 			this.montoHaber = montoHaber;
 		}
 
-		public double getSaldo() {
+		public static double getSaldo() {
 			return saldo;
 		}
 
@@ -77,10 +79,10 @@ public class Movimiento {
 //metodos personales de movimiento
 		
 	    public Movimiento altaMovimiento(){
-	        try (Scanner entrada = new Scanner(System.in)) {
+	        Scanner entrada = new Scanner(System.in);
 				int codigo = Excepciones.castearEntero("ingrese el codigo de movimiento: ");
 
-				Movimiento movimientoExistente = busquedaMovimiento(codigo);
+				Movimiento movimientoExistente = datosMovimiento(codigo);
 				if (movimientoExistente != null){
 				    System.out.println("el movimineto " + codigo + "ya existe: ");
 				    System.out.println("desea crear un nuevo movimiento?? (si / no): ");
@@ -102,15 +104,25 @@ public class Movimiento {
 				System.out.println("movimiento creado con exito");
 
 				return nuevoMovimiento;
-			}
+			
 	    }
 	    
-	    private Movimiento busquedaMovimiento(int codigo) {
-			return null;
+	    public void datosMovimiento (Movimiento mov) {
+			if(mov != null) {
+				System.out.println("Datos del movimiento:");
+				System.out.println("Codigo: " + Movimiento.getCodigo());
+				System.out.println("Detalle: " + Movimiento.getDetalle());
+				System.out.println("Saldo: " + Movimiento.getSaldo());
+				System.out.println("Precio: " + Movimiento.getMontoHaber());
+				System.out.println("Marca: " + Movimiento.getMontoHaber());
+				System.out.println("------------------------------");
+			}else {
+				System.out.println("No se encontraron los datos.");
+			}
 		}
 
 		public void modificarMovimiento(){
-	        try (Scanner entrada = new Scanner(System.in)) {
+	        Scanner entrada = new Scanner(System.in);
 				int codigo = Excepciones.castearEntero("ingrese el codigo del movimiento: ");
 				Movimiento movimientoExistente = null;
 				for (Movimiento movimiento : listaMovimiento) {
@@ -131,13 +143,13 @@ public class Movimiento {
 				movimientoExistente.setMontoDebe(montoDebe);
 				movimientoExistente.setMontoHaber(montoHaber);
 				movimientoExistente.setSaldo(saldo);
-			}
+			
 	        System.out.println("movimiento modificado con exito");
 	    }
 	    
 	    public void bajaMovimiento(){
-	        try (Scanner entrada = new Scanner(System.in)) {
-			}
+	        Scanner entrada = new Scanner(System.in);
+			
 	        int codigo = Excepciones.castearEntero("ingrese el codigo del movimiento a eliminar: ");
 	        Movimiento movimientoExistente = null;
 	        for (Movimiento movimiento : listaMovimiento){
@@ -191,5 +203,16 @@ public class Movimiento {
 
 	    }
 
+		public static void listarMovimientos() {
+			if(Movimiento.listaMovimiento != null) {
+				for (Movimiento elemento : listaMovimiento) {
+				
+				}
+			}else {
+				System.out.println("No se encontraron los datos.");
+			}
+		}
+		}
+
 	
-}
+

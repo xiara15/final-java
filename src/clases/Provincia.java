@@ -1,4 +1,4 @@
-package finaljava;
+package clases;
 
 public enum Provincia {
 	 BUENOS_AIRES ("Buenos Aires"),

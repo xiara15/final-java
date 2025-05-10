@@ -1,4 +1,4 @@
-package finaljava;
+package clases;
 
 public enum Categoria {
     INDUMENTARIA("indumentaria"),
