@@ -47,7 +47,7 @@ public class MenuVerDatos {
 		}else {
 			System.out.println("No se han encontrado los datos.");
 		}
-		Menu.menusDatos();
+		Menu.menusVerDatos();
 		return null;
 	}
 	
@@ -84,7 +84,7 @@ public class MenuVerDatos {
 		}else {
 			System.out.println("No se han encontrado los datos.");
 		}
-		Menu.menusDatos();
+		Menu.menusVerDatos();
 		return null;
 	}
 			
@@ -122,7 +122,7 @@ public class MenuVerDatos {
 		}else {
 			System.out.println("No se han encontrado los datos.");
 		}
-		Menu.menusDatos();
+		Menu.menusVerDatos();
 		return null;
 	}
 			
@@ -158,7 +158,7 @@ public class MenuVerDatos {
 		}else {
 			System.out.println("No se han encontrado los datos.");
 		}
-		Menu.menusDatos();
+		Menu.menusVerDatos();
 		return null;
 	}
 	public static CuentaCorriente menuDatosCtaCte(ArrayList <CuentaCorriente> lista) {
@@ -190,7 +190,7 @@ public class MenuVerDatos {
 		}else {
 			System.out.println("No se han encontrado los datos.");
 		}
-		Menu.menusDatos();
+		Menu.menusVerDatos();
 		return null;
 	}
 	public static Movimiento menuDatosMovimiento(ArrayList <Movimiento> lista) {
@@ -226,7 +226,7 @@ public class MenuVerDatos {
 		}else {
 			System.out.println("No se han encontrado los datos.");
 		}
-		Menu.menusDatos();
+		Menu.menusVerDatos();
 	}
 	public static void menuDatosProducto(ArrayList <Producto> lista) {
 		if(lista != null) {

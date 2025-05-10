@@ -6,7 +6,9 @@ import java.util.Scanner;
 
 public class Persona {
 	
-	private static ArrayList<Persona> listaPersonas = new ArrayList<>();
+	public static final String lista = null;
+
+	public static ArrayList<Persona> listaPersonas = new ArrayList<>();
 	
 	private int dni;
 	private boolean activo; 
@@ -453,6 +455,7 @@ public LocalDate getFechaDeNacimiento() {
 public void setFechaDeNacimiento(LocalDate fechaDeNacimiento) {
 	this.fechaDeNacimiento = fechaDeNacimiento;
 }
+
 
 }	
 

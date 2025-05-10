@@ -1,18 +1,17 @@
 package Menues;
 
-import Menues.MenuIngresarDatos;
+import FinalprogramacionII.MetodosGeneral;
+import Menues.MenuVerDatos;
+import archivos.archivo;
 import clases.Cliente;
-import clases.Persona;
-import clases.Usuario;
 import clases.CuentaCorriente;
 import clases.Empleado;
 import clases.Movimiento;
+import clases.Persona;
 import clases.Producto;
 import clases.Proveedor;
+import clases.Usuario;
 import clases.Venta;
-import FinalprogramacionII.FinalJava;
-import archivos.archivo;
-import FinalprogramacionII.MetodosGeneral;
 
 
 
@@ -49,15 +48,15 @@ public class Menu {
 				break;
 					
 			case 2:
-				MenuIngresarDatos();
+				menusDatos();
 				break;
 					
 			case 3:
-				MenuArchivos();
+				menusArchivos();
 				break;
 					
 			case 4:
-				Archivo.guardarDatos();
+				archivo.cargarDatos();
 				
 				System.out.println("Saliendo...");
 				System.exit(0);
@@ -74,7 +73,7 @@ public class Menu {
 	}
 
 		//MENUS SECUNDARIOS
-		public static void menusDatos() {
+		public static void menusVerDatos() {
 			System.out.println("Bienvenido al menú secundario para ver datos:");
 			System.out.println("1 - Menú de personas.");
 			System.out.println("2 - Menú de empleados.");
@@ -94,7 +93,7 @@ public class Menu {
 				
 			switch(num) {
 			case 1:
-				MenuPersona.menuDatosPersona(Persona.listaPersonas);
+				Persona.menuDatosPersona(Persona.lista);
 				break;
 					
 			case 2:
