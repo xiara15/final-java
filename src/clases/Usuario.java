@@ -1,11 +1,18 @@
 package clases;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import FinalprogramacionII.MetodosGeneral;
+
 	
-public class Usuario extends Persona{
-	    private String usuario;
+public class Usuario extends Persona implements Serializable{
+	    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+		private String usuario;
 	    private String clave;
 	    private Persona propietario;
 
@@ -16,11 +23,10 @@ public Usuario(int dni, boolean activo, String nombres, String apellidos, String
 	        this.clave = clave;
 	    }
 	
-public Usuario(){
-	//constructor vacio
-}
-	
+
+
 public static ArrayList<Usuario>listaDeusuarios = new ArrayList<>();
+private static Scanner entrada;
 
 public String getUsuario() {
 	return usuario;
@@ -56,11 +62,11 @@ public static void setListaDeusuarios(ArrayList<Usuario> listaDeusuarios) {
 
 //metodos personales ususario
 
-public Usuario altaUsuario(){
+public static Usuario altaUsuario(Persona persona){
 
-    Scanner entrada = new Scanner(System.in);
+    entrada = new Scanner(System.in);
 		int dni = Excepciones.castearEntero("ingrese el dni: ");
-		Persona propietario = buscarPersona(dni);
+		Persona propietario = buscarUsuario(dni);
 		if (propietario == null){
 		    System.out.println("no se encontro el dni, debes crear una persona primero: ");
 		    return null;
@@ -88,8 +94,8 @@ public Usuario altaUsuario(){
 
 		Usuario nuevoUsuario = new Usuario(propietario.getDni(),
 		        propietario.isActivo(),
-		        propietario.getNombres(),
-		        propietario.getApellidos(),
+		        propietario.getNombre(),
+		        propietario.getApellido(),
 		        propietario.getTelefono(),
 		        propietario.getDireccion(),
 		        propietario.getProvincia(),
@@ -105,7 +111,7 @@ public Usuario altaUsuario(){
 	
 }
 
-public void bajaUsuario(){
+public void bajaUsuario(Usuario elemento){
 
     int dni = Excepciones.castearEntero("ingrese el dni: ");
     Usuario usuarioExistente = buscarUsuario(dni);
@@ -117,8 +123,8 @@ public void bajaUsuario(){
     System.out.println("usuario eliminado: ");
 }
 
-public void modifiacarUsuario(){
-    Scanner entrada = new Scanner(System.in);
+public void modificarUsuario(Usuario usuario){
+    entrada = new Scanner(System.in);
 		int opcion;
 		boolean salir = false;
 
@@ -176,7 +182,7 @@ public void modifiacarUsuario(){
 	
 }
 
-public Usuario buscarUsuario(int dni){
+public static Usuario buscarUsuario(int dni){
     for (Usuario usuario : listaDeusuarios){
         if (usuario.getDni() == dni){
             return usuario;
@@ -186,56 +192,29 @@ public Usuario buscarUsuario(int dni){
     return null;
 }
 
-public static void listarUsuario(ArrayList<Usuario> listaDeusuarios2){
+public static void listarUsuario(ArrayList<Usuario> listaDeusuarios){
     if (listaDeusuarios.isEmpty()){
         System.out.println("no hay usuario para mostrar: ");
     } else {
         for (Usuario usuario : listaDeusuarios){
-            System.out.println("nombre: " + usuario.getNombres());
-            System.out.println("apellido: " + usuario.getApellidos());
+            System.out.println("nombre: " + usuario.getNombre());
+            System.out.println("apellido: " + usuario.getApellido());
             System.out.println("nombre de usuario: " + usuario.getUsuario());
         }
     }
 }
 
-public void menuDeUsuario(){
-
-    Scanner entrada = new Scanner(System.in);
-		int opcion;
-		boolean salir = false;
-		do {
-		    System.out.println("1- crear un usuario: ");
-		    System.out.println("2- baja de usuario: ");
-		    System.out.println("3- modificar usuario:");
-		    System.out.println("4- ver usuario: ");
-		    System.out.println("5- salir: ");
-		    opcion = entrada.nextInt();
-		    entrada.nextLine();
-
-		    switch (opcion){
-
-		        case 1:
-		            altaUsuario();
-		            break;
-		        case 2:
-		            bajaUsuario();
-		            break;
-		        case 3:
-		            modifiacarUsuario();
-		            break;
-		        case 4:
-		             listarUsuario(null);
-		             break;
-		        case 5:
-		            salir = true;
-		            System.out.println("saliendo del sistema");
-		            break;
-		        default:
-		            System.out.println("opcion incorrecta");
-		            return;
-		    }
-
-		}while (! salir);
+public void datosUsuario(Usuario usuario) {
+	if(usuario != null) {
+		System.out.println("Datos del usuario:");
+		System.out.println("Usuario: " + usuario.getUsuario());
+		System.out.println("Clave: " + usuario.getClave());
+		System.out.println("Propietario: " + usuario.getPropietario());
+		System.out.println("Activo: " + MetodosGeneral.verificarBooleano(usuario.isActivo()));
+		System.out.println("------------------------------");
+	}else {
+		System.out.println("No se encontraron los datos.");
 	}
+}
 
 }

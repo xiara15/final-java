@@ -1,15 +1,21 @@
 package clases;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
 	
-public class Empleado extends Persona{
+public class Empleado extends Persona implements Serializable{
 
-	    private static int length;
+	    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+		private static int length;
 		private LocalDate fechaIngreso;
 	    private LocalDate fechaEgreso;
 	    private  int legajo;
 	    private double salario;
-		private static Empleado[] listaEmpleados;
+		public static ArrayList<Empleado> listaEmpleados;
 	
 
 	 
@@ -22,10 +28,6 @@ public Empleado(int dni, boolean activo, String nombre, String apellido, String 
 	        this.legajo = legajo;
 	        this.salario = salario;
 	    }
-
-public Empleado(){
-//consturctor vacio
-}
 
 public LocalDate getFechaIngreso() {
 	return fechaIngreso;
@@ -61,18 +63,18 @@ public void setSalario(double salario) {
 
 //metodos personalizados para empleado
 
-public void altaEmpleado(){
+public static void altaEmpleado(){
     int dni = Excepciones.castearEntero("ingrese el dni: ");
 
-    Persona personaExistente = buscarPersona(dni);
+    Persona personaExistente = buscarEmpleado();
     if (personaExistente != null) {
         System.out.println("la persona con DNI " + dni + " ya existe:");
-        System.out.println("nombre: " + personaExistente.getNombres());
-        System.out.println("apellido: " + personaExistente.getApellidos());
+        System.out.println("nombre: " + personaExistente.getNombre());
+        System.out.println("apellido: " + personaExistente.getApellido());
     }else {
         System.out.println("debe crear una persona");
         altaPersona();
-        personaExistente = buscarPersona(dni);
+        personaExistente = buscarEmpleado();
     }
 
     int legajo = Excepciones.castearEntero("ingrese el legajo del empleado: ");
@@ -85,8 +87,8 @@ public void altaEmpleado(){
     Empleado nuevoEmpleado = new Empleado(
             personaExistente.getDni(),
             personaExistente.isActivo(),
-            personaExistente.getNombres(),
-            personaExistente.getApellidos(),
+            personaExistente.getNombre(),
+            personaExistente.getApellido(),
             personaExistente.getTelefono(),
             personaExistente.getDireccion(),
             personaExistente.getProvincia(),
@@ -103,8 +105,6 @@ public void altaEmpleado(){
 }
 
 public void bajaEmpleado() {
-    Scanner entrada = new Scanner(System.in);
-	
     int dniBuscado = Excepciones.castearEntero("ingrese el dni: ");
 
     Empleado empleadoEncontrado = null;
@@ -132,8 +132,8 @@ public void bajaEmpleado() {
     System.out.println("empleado ha sido dado de baja exitosamente.");
 }
 
-public void modificarEmpleado(int legajo) {
-    Scanner scanner = new Scanner(System.in);
+public void modificarEmpleado(Empleado elemento) {
+    try (Scanner scanner = new Scanner(System.in)) {
 		// Mostrar menú de opciones para modificar
 		    System.out.println("¿Qué deseas modificar?");
 		    System.out.println("1. Nombre");
@@ -157,7 +157,7 @@ public void modificarEmpleado(int legajo) {
 		        case 2:
 		            System.out.print("Ingrese el nuevo apellido: ");
 		            String nuevoApellido = scanner.nextLine();
-		            extracted(empleado).setApellidos(nuevoApellido);
+		            extracted(empleado).setApellido(nuevoApellido);
 		            break;
 		        case 3:
 		            System.out.print("Ingrese el nuevo teléfono: ");
@@ -186,15 +186,16 @@ public void modificarEmpleado(int legajo) {
 		            System.out.println("Opción no válida.");
 		            break;
 		    }
+	}
 	
     }
 
-private Empleado extracted(Empleado empleado) {
+private static Empleado extracted(Empleado empleado) {
 	return empleado;
 } 
 
 
-public void buscarEmpleado(){
+public static Persona buscarEmpleado(){
     try (Scanner entrada = new Scanner(System.in)) {
 	}
 
@@ -210,14 +211,32 @@ public void buscarEmpleado(){
 
     if (empleadoEncontrado != null) {
         System.out.println("empleado encontrado: ");
-        System.out.println("nombre: " + empleadoEncontrado.getNombres());
-        System.out.println("apellido: " + empleadoEncontrado.getApellidos());
+        System.out.println("nombre: " + empleadoEncontrado.getNombre());
+        System.out.println("apellido: " + empleadoEncontrado.getApellido());
         System.out.println("legajo: " + empleadoEncontrado.getLegajo());
         System.out.println("fecha de ingreso: " + empleadoEncontrado.getFechaIngreso());
         System.out.println("activo: " + (empleadoEncontrado.isActivo() ? "si" : "no"));
     } else {
         System.out.println("no se encontro el empleado");
-    }}
+    }
+	return empleadoEncontrado;}
+
+
+    
+public void datosEmpleado (Empleado empleado) {
+	if(empleado != null) {
+		super.datosPersona(empleado);
+		
+		System.out.println("Datos laborales:");
+		System.out.println("N° de legajo: " + empleado.getLegajo());
+		System.out.println("Salario: " + empleado.getSalario());
+		System.out.println("Fecha de ingreso: " + empleado.getFechaIngreso());
+		System.out.println("Fecha de egreso: " + empleado.getFechaEgreso());
+		System.out.println("------------------------------");
+	} else {
+		System.out.println("No se encontraron los datos.");
+	}
+}
 
     public static void ListarEmpleado() {
         if (Empleado.length == 0) {
@@ -225,12 +244,13 @@ public void buscarEmpleado(){
         } else {
             for (Empleado empleado : listaEmpleados) {
                 System.out.println("DNI: " + empleado.getDni());
-                System.out.println("nombre: " + empleado.getNombres());
-                System.out.println("apellido: " + empleado.getApellidos());
+                System.out.println("nombre: " + empleado.getNombre());
+                System.out.println("apellido: " + empleado.getApellido());
                 System.out.println("legajo: " + empleado.getLegajo());
                 System.out.println("telefono: " + empleado.getTelefono());
                 System.out.println("direccion: " + empleado.getDireccion());
-                System.out.println("provincia: " + empleado.getProvincia().obtenerProvincia());
+                empleado.getProvincia();
+				System.out.println("provincia: " + Provincia.obtenerProvincia());
                 System.out.println("localidad: " + empleado.getLocalidad());
                 System.out.println("fecha de nacimiento: " + empleado.getFechaNacimiento());
                 System.out.println("sexo: " + empleado.getSexo().ObtenerSexo());

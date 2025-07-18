@@ -1,38 +1,42 @@
 package clases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 import FinalprogramacionII.MetodosGeneral;
 
-public class Movimiento {
+public class Movimiento implements Serializable{
 
-	    private static int codigo;
+	    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+		private static int codigo;
 	    private static String detalle;
 	    private double montoDebe;
 	    private static double montoHaber;
 	    private static double saldo;
 
 	    public Movimiento(int codigo, String detalle, double montoDebe, double montoHaber, double saldo) {
-	        this.codigo = codigo;
-	        this.detalle = detalle;
+	        Movimiento.codigo = codigo;
+	        Movimiento.detalle = detalle;
 	        this.montoDebe = montoDebe;
-	        this.montoHaber = montoHaber;
-	        this.saldo = saldo;
+	        Movimiento.montoHaber = montoHaber;
+	        Movimiento.saldo = saldo;
 	    }
 	    
-	    public Movimiento(){
-	    	//constructor vacio
-	    }
-	    
-	    private static ArrayList<Movimiento>listaMovimiento = new ArrayList<>();
+	
+	    public static ArrayList<Movimiento>listaMovimiento = new ArrayList<>();
+	
+		private static Scanner teclado;
 
 		public static int getCodigo() {
 			return codigo;
 		}
 
 		public void setCodigo(int codigo) {
-			this.codigo = codigo;
+			Movimiento.codigo = codigo;
 		}
 
 		public static String getDetalle() {
@@ -40,7 +44,7 @@ public class Movimiento {
 		}
 
 		public void setDetalle(String detalle) {
-			this.detalle = detalle;
+			Movimiento.detalle = detalle;
 		}
 
 		public double getMontoDebe() {
@@ -56,7 +60,7 @@ public class Movimiento {
 		}
 
 		public void setMontoHaber(double montoHaber) {
-			this.montoHaber = montoHaber;
+			Movimiento.montoHaber = montoHaber;
 		}
 
 		public static double getSaldo() {
@@ -64,7 +68,7 @@ public class Movimiento {
 		}
 
 		public void setSaldo(double saldo) {
-			this.saldo = saldo;
+			Movimiento.saldo = saldo;
 		}
 
 		public static ArrayList<Movimiento> getListaMovimiento() {
@@ -78,25 +82,18 @@ public class Movimiento {
 		
 //metodos personales de movimiento
 		
-	    public Movimiento altaMovimiento(){
-	        Scanner entrada = new Scanner(System.in);
+	    public static Movimiento altaMovimiento(){
+	        try (Scanner entrada = new Scanner(System.in)) {
 				int codigo = Excepciones.castearEntero("ingrese el codigo de movimiento: ");
 
-				Movimiento movimientoExistente = datosMovimiento(codigo);
-				if (movimientoExistente != null){
-				    System.out.println("el movimineto " + codigo + "ya existe: ");
-				    System.out.println("desea crear un nuevo movimiento?? (si / no): ");
-				    String respuesta = entrada.nextLine();
-				    if (respuesta.equalsIgnoreCase("no")){
-				        System.out.println("movimiento no creado: ");
-				        return null;
-				    }
-				}
+				System.out.println("Ingrese detalle del movimiento:");
+				teclado = null;
+				detalle = teclado.nextLine();
 
 				System.out.println("detalles del movimineto");
 				String detalle = entrada.nextLine();
-				double montoDebe = Excepciones.castearDecimal("ingrese el monto del debe: ");
-				double montoHaber = Excepciones.castearDecimal("ingrese el monto del haber: ");
+				double montoDebe = Excepciones.castearDecimal("ingrese el monto que debe: ");
+				double montoHaber = Excepciones.castearDecimal("ingrese el monto de haber: ");
 				double saldo = Excepciones.castearDecimal("ingrese el saldo: ");
 
 				Movimiento nuevoMovimiento = new Movimiento(codigo,detalle,montoDebe,montoHaber,saldo);
@@ -104,29 +101,31 @@ public class Movimiento {
 				System.out.println("movimiento creado con exito");
 
 				return nuevoMovimiento;
+			}
 			
 	    }
 	    
-	    public void datosMovimiento (Movimiento mov) {
-			if(mov != null) {
-				System.out.println("Datos del movimiento:");
-				System.out.println("Codigo: " + Movimiento.getCodigo());
-				System.out.println("Detalle: " + Movimiento.getDetalle());
-				System.out.println("Saldo: " + Movimiento.getSaldo());
-				System.out.println("Precio: " + Movimiento.getMontoHaber());
-				System.out.println("Marca: " + Movimiento.getMontoHaber());
-				System.out.println("------------------------------");
-			}else {
-				System.out.println("No se encontraron los datos.");
-			}
-		}
+	    public Movimiento datosMovimiento(Movimiento mov) {
+	        if (mov != null) {
+	            System.out.println("Datos del movimiento:");
+	            System.out.println("Código: " + Movimiento.getCodigo());
+	            System.out.println("Detalle: " + Movimiento.getDetalle());
+	            System.out.println("Saldo: " + Movimiento.getSaldo());
+	            System.out.println("Precio: " + Movimiento.getMontoHaber());
+	            System.out.println("Marca: " + Movimiento.getMontoHaber()); 
+	            System.out.println("------------------------------");
+	        } else {
+	            System.out.println("No se encontraron los datos.");
+	        }
+	        return mov;
+	    }
 
-		public void modificarMovimiento(){
-	        Scanner entrada = new Scanner(System.in);
+		public void modificarMovimiento(Movimiento elemento){
+	        try (Scanner entrada = new Scanner(System.in)) {
 				int codigo = Excepciones.castearEntero("ingrese el codigo del movimiento: ");
 				Movimiento movimientoExistente = null;
 				for (Movimiento movimiento : listaMovimiento) {
-				    if (movimiento.getCodigo() == codigo) {
+				    if (Movimiento.getCodigo() == codigo) {
 				        movimientoExistente = movimiento;
 				        break;
 				    }
@@ -143,17 +142,15 @@ public class Movimiento {
 				movimientoExistente.setMontoDebe(montoDebe);
 				movimientoExistente.setMontoHaber(montoHaber);
 				movimientoExistente.setSaldo(saldo);
-			
-	        System.out.println("movimiento modificado con exito");
+			}
+				System.out.println("movimiento modificado con exito");
 	    }
 	    
-	    public void bajaMovimiento(){
-	        Scanner entrada = new Scanner(System.in);
-			
+	    public void bajaMovimiento(Movimiento elemento){
 	        int codigo = Excepciones.castearEntero("ingrese el codigo del movimiento a eliminar: ");
 	        Movimiento movimientoExistente = null;
 	        for (Movimiento movimiento : listaMovimiento){
-	            if (movimiento.getCodigo() == codigo){
+	            if (Movimiento.getCodigo() == codigo){
 	                movimientoExistente = movimiento;
 	                break;
 	            }
@@ -166,53 +163,61 @@ public class Movimiento {
 	        System.out.println("movimiento eliminado");
 	    }
 
-	    public void menuMovimiento(){
-	        try (Scanner entrada = new Scanner(System.in)) {
-				int opcion;
-				boolean salir = false;
 
-				do {
-				    System.out.println("1- crear un movimiento: ");
-				    System.out.println("2- modificar un movimiento: ");
-				    System.out.println("3- dar de baja un movimiento: ");
-				    System.out.println("4- salir");
-				    opcion = entrada.nextInt();
-				    entrada.nextLine();
 
-				    switch (opcion){
-				        case 1:
-				            altaMovimiento();
-				            break;
-				        case 2:
-				            modificarMovimiento();
-				            break;
-				        case 3:
-				            bajaMovimiento();
-				            break;
-				        case 4:
-				            salir = true;
-				            System.out.println("saliendo del sistema");
-				            break;
-				        default:
-				            System.out.println("opcion incorrecta");
-				            return;
-				    }
-
-				}while(! salir);
-			}
-
+	    public static void listarMovimientos() {
+	        if (listaMovimiento != null && !listaMovimiento.isEmpty()) {
+	            for (Movimiento elemento : listaMovimiento) {
+	                System.out.println(elemento); // o imprimir campos específicos
+	            }
+	        } else {
+	            System.out.println("No se encontraron los datos.");
+	        }
 	    }
+		
+	    public static Movimiento buscarMovimiento() {
+	        int codigo;
+	        String codigoAux = null;
+	        codigo = MetodosGeneral.castearEntero("Ingrese el código del producto a buscar: ", codigoAux);
 
-		public static void listarMovimientos() {
-			if(Movimiento.listaMovimiento != null) {
-				for (Movimiento elemento : listaMovimiento) {
-				
+	        for (Movimiento elemento : listaMovimiento) {
+	            if (codigo == Movimiento.getCodigo()) {
+	                System.out.println("El movimiento SÍ fue encontrado.");
+	                return elemento;
+	            }
+	        }
+
+	        System.out.println("El movimiento NO fue encontrado.");
+	        return null;
+	    }
+		
+		public static ArrayList <Movimiento> crearMovimientos (Movimiento...movimientos){
+			if(movimientos != null) {
+				ArrayList <Movimiento> listarMovimientos = new ArrayList <Movimiento> ();
+				for (Movimiento elemento : movimientos) {
+					listarMovimientos.add(elemento);
 				}
+				return listarMovimientos;
 			}else {
 				System.out.println("No se encontraron los datos.");
 			}
+			return null;
 		}
+		
+		public boolean validarMovimiento (Movimiento movimiento) {
+			return this.montoDebe <= Movimiento.saldo;
 		}
+		
+		public double calcularSaldo(Movimiento movimiento) {
+			return Movimiento.saldo += Movimiento.montoHaber - movimiento.montoDebe;
+		}
+					
+		public double calcularNeto(Movimiento movimiento) {
+			return Movimiento.montoHaber - movimiento.montoDebe;
+		}
+		
+
+}
 
 	
 

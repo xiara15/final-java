@@ -1,41 +1,29 @@
 package archivos;
 
 import java.io.*;
+
 import java.util.ArrayList;
-import java.util.List;
+
 import clases.Proveedor;
 
 public class ArchivoProveedor {
-
-    private String rutaArchivo;
-
-    public ArchivoProveedor(String rutaArchivo) {
-        this.rutaArchivo = rutaArchivo;
-        crearArchivoSiNoExiste();
-    }
-
-    private void crearArchivoSiNoExiste() {
-        File archivo = new File(rutaArchivo);
-        try {
-            File carpeta = archivo.getParentFile();
-            if (carpeta != null && !carpeta.exists()) {
-                carpeta.mkdirs(); // Crea la carpeta si no existe
-            }
-
-            if (!archivo.exists()) {
-                if (archivo.createNewFile()) {
-                    System.out.println("Archivo de proveedores creado.");
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error al crear el archivo: " + e.getMessage());
-        }
-    }
-
-    public static void crearArchivoProveedor(String rutaArchivo) {
-        new ArchivoProveedor(rutaArchivo);
-    }
-
+	
+	public static void crearArchivoProveedor() {
+		String ruta = "Carpeta General" + File.separator + "proveedor.dat";
+		File archivo = new File(ruta);
+		if (archivo.exists()==false){
+			try {
+				if (archivo.createNewFile()) {
+					System.out.println("El archivo se creó con exito");
+				}
+			} catch (IOException error) {
+				System.out.println("ERROR: " + error.getMessage());
+			}
+		} else {
+			System.out.println("El archivo que intenta crear ya existe.");
+		}
+	}
+	
     public static void eliminarArchivoProveedor(String rutaArchivo) {
         File archivo = new File(rutaArchivo);
         if (archivo.exists()) {
@@ -49,34 +37,25 @@ public class ArchivoProveedor {
         }
     }
 
-    // Guardar un proveedor al archivo (agregando a la lista)
-    public void guardarProveedor(Proveedor proveedor) {
-        List<Proveedor> proveedores = cargarProveedores(); // Cargar existentes
-        proveedores.add(proveedor); // Agregar nuevo
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaArchivo))) {
-            oos.writeObject(proveedores);
-            System.out.println("Proveedor guardado con éxito.");
-        } catch (IOException e) {
-            System.out.println("Error al guardar el proveedor: " + e.getMessage());
-        }
-    }
 
-    // Cargar todos los proveedores del archivo
-    public List<Proveedor> cargarProveedores() {
-        File archivo = new File(rutaArchivo);
-        if (!archivo.exists() || archivo.length() == 0) {
-            return new ArrayList<>(); // Retorna lista vacía si el archivo está vacío
-        }
+ 	public static void guardarProveedores() {
+ 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Carpeta General" + File.separator + "proveedor.dat"))) {
+ 			oos.writeObject(Proveedor.listaProveedores);
+ 			System.out.println("Archivo proveedor guardado correctamente.");
+ 		} catch (IOException error) {
+ 			System.out.println("Error al guardar: " + error.getMessage());
+ 		}
+ 	}
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(rutaArchivo))) {
-            return extraer(ois);
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error al cargar los proveedores: " + e.getMessage());
-            return new ArrayList<>();
-        }
-    }
-
-    private List<Proveedor> extraer(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        return (List<Proveedor>) ois.readObject();
-    }
+ 	
+ 	public static void cargarProveedores() {
+ 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Carpeta General" + File.separator + "proveedor.dat"))) {
+ 			Proveedor.listaProveedores = (ArrayList <Proveedor>) ois.readObject();
+ 			System.out.println("Archivo proveedor cargado correctamente.");
+ 		} catch (IOException error) {
+ 			System.out.println("Error al cargar: " + error.getMessage());
+ 		} catch (ClassNotFoundException error) {
+ 			System.out.println("Clase no encontrada: " + error.getMessage());
+ 		}
+ 	}
 }

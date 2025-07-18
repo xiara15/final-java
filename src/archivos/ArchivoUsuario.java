@@ -1,41 +1,29 @@
 package archivos;
 
 import java.io.*;
+
 import java.util.ArrayList;
-import java.util.List;
+
 import clases.Usuario;
 
 public class ArchivoUsuario {
 
-    private String rutaArchivo;
-
-    public ArchivoUsuario(String rutaArchivo) {
-        this.rutaArchivo = rutaArchivo;
-        crearArchivoSiNoExiste();
-    }
-
-    private void crearArchivoSiNoExiste() {
-        File archivo = new File(rutaArchivo);
-        try {
-            File carpeta = archivo.getParentFile();
-            if (carpeta != null && !carpeta.exists()) {
-                carpeta.mkdirs(); // Crea la carpeta si no existe
-            }
-
-            if (!archivo.exists()) {
-                if (archivo.createNewFile()) {
-                    System.out.println("Archivo de usuarios creado.");
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error al crear el archivo: " + e.getMessage());
-        }
-    }
-
-    public static void crearArchivoUsuario(String rutaArchivo) {
-        new ArchivoUsuario(rutaArchivo);
-    }
-
+	// CREAR ARCHIVO
+		public static void crearArchivoUsuario() {
+			String ruta = "Carpeta General" + File.separator + "usuario.dat";
+			File archivo = new File(ruta);
+			if (archivo.exists()==false){
+				try {
+					if (archivo.createNewFile()) {
+						System.out.println("El archivo se creó con exito");
+					}
+				} catch (IOException error) {
+					System.out.println("ERROR: " + error.getMessage());
+				}
+			} else {
+				System.out.println("El archivo que intenta crear ya existe.");
+			}
+		}
     public static void eliminarArchivoUsuario(String rutaArchivo) {
         File archivo = new File(rutaArchivo);
         if (archivo.exists()) {
@@ -49,34 +37,27 @@ public class ArchivoUsuario {
         }
     }
 
-    // Guardar un usuario al archivo (agregando a la lista)
-    public void guardarUsuario(Usuario usuario) {
-        List<Usuario> usuarios = cargarUsuarios(); // Cargar existentes
-        usuarios.add(usuario); // Agregar nuevo
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaArchivo))) {
-            oos.writeObject(usuarios);
-            System.out.println("Usuario guardado con éxito.");
-        } catch (IOException e) {
-            System.out.println("Error al guardar el usuario: " + e.getMessage());
+    public static void guardarUsuarios() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream("Carpeta General" + File.separator + "usuario.dat"))) {
+            
+            oos.writeObject(Usuario.listaDeusuarios);
+            System.out.println("Archivo usuario guardado correctamente.");
+            
+        } catch (IOException error) {
+            System.out.println("Error al guardar: " + error.getMessage());
         }
     }
 
-    // Cargar todos los usuarios del archivo
-    public List<Usuario> cargarUsuarios() {
-        File archivo = new File(rutaArchivo);
-        if (!archivo.exists() || archivo.length() == 0) {
-            return new ArrayList<>(); // Retorna lista vacía si el archivo está vacío
-        }
-
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(rutaArchivo))) {
-            return extraer(ois);
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error al cargar los usuarios: " + e.getMessage());
-            return new ArrayList<>();
-        }
-    }
-
-    private List<Usuario> extraer(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-        return (List<Usuario>) ois.readObject();
-    }
+	
+	public static void cargarUsuarios() {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Carpeta General" + File.separator + "usuario.dat"))) {
+			Usuario.listaDeusuarios = (ArrayList <Usuario>) ois.readObject();
+			System.out.println("Archivo usuario cargado correctamente.");
+		} catch (IOException error) {
+			System.out.println("Error al cargar: " + error.getMessage());
+		} catch (ClassNotFoundException error) {
+			System.out.println("Clase no encontrada: " + error.getMessage());
+		}
+	}
 }

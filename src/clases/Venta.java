@@ -1,16 +1,24 @@
 package clases;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Vector;
 
-public class Venta {
+import FinalprogramacionII.MetodosGeneral;
 
-	 private int codigo;
+public class Venta implements Serializable{
+
+	 /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int codigo;
 	    private Cliente cliente;
 	    private int cantidad;
 	    private Producto[] producto; //limite de 10 productos
 	    private double total;
 	    private FormaDePago pago;
-	    private static ArrayList<Venta> listaDeVentas = new ArrayList<>();
+	    public static ArrayList<Venta> listaDeVentas = new ArrayList<>();
 
 	    public Venta(int codigo, Cliente cliente, int cantidad, Producto[] producto, double total, FormaDePago pago) {
 	        this.codigo = codigo;
@@ -20,9 +28,7 @@ public class Venta {
 	        this.total = total;
 	        this.pago = pago;
 }
-	    public Venta(){
-	    	//constructor vacio.
-	    }
+	   
 		public int getCodigo() {
 			return codigo;
 		}
@@ -66,10 +72,9 @@ public class Venta {
 			Venta.listaDeVentas = listaDeVentas;
 		}
 
-//metodos personales de venta	
-		
-		  public Venta altaVenta(){
-		        Scanner entrada = new Scanner(System.in);
+//metodos 
+		  public Venta altaVenta(Cliente cliente, Vector<Producto> vector){
+		        try (Scanner entrada = new Scanner(System.in)) {
 					int codigo = Excepciones.castearEntero("ingrese el codigo de la venta: ");
 
 					Venta ventaExistente = busquedaDeVentas(codigo);
@@ -84,8 +89,7 @@ public class Venta {
 					}
 
 					System.out.println("datos del cliente: ");
-					Cliente cliente = new Cliente();
-					cliente.altaCliente();
+					Cliente.altaCliente(null);
 
 					Producto[] productos = new Producto[10];
 					int cantidad = 0;
@@ -122,10 +126,11 @@ public class Venta {
 					System.out.println("venta creada con exito: ");
 
 					return nuevaVenta;
+				}
 				
 		    }
 
-		  public void bajaDeVenta(){
+		  public void bajaDeVenta(Venta elemento){
 		        int codigo = Excepciones.castearEntero("ingrese el codigo de la venta");
 		        Venta ventaExistente = busquedaDeVentas(codigo);
 		        if (ventaExistente == null){
@@ -135,8 +140,8 @@ public class Venta {
 		        listaDeVentas.remove(ventaExistente);
 		        System.out.println("la venta se elimino con exito: ");
 		    }
-		  public void modificarVenta(){
-		        Scanner entrada = new Scanner(System.in);
+		  public void modificarVenta(Venta elemento){
+		        try (Scanner entrada = new Scanner(System.in)) {
 					int codigo = Excepciones.castearEntero("ingrese el codigo de la venta: ");
 					Venta ventaExistente = busquedaDeVentas(codigo);
 					if (ventaExistente == null){
@@ -213,12 +218,11 @@ public class Venta {
 					            return;
 					    }
 					}while (!salir);
-				
-
-		        System.out.println("cambios realizados: ");
+				}
+					System.out.println("cambios realizados: ");
 		    }
 
-		  public void verDetalleDeVenta(){
+		  public void verDetalleDeVenta(Venta elemento){
 		        int codigo = Excepciones.castearEntero("ingrese el codigo de la venta: ");
 		        Venta ventaExistente = busquedaDeVentas(codigo);
 		        if (ventaExistente == null){
@@ -227,7 +231,7 @@ public class Venta {
 		        }
 		        System.out.println("detalle de la venta: ");
 		        System.out.println("codigo: " + ventaExistente.getCodigo());
-		        System.out.println("cuenta corriente: " + ventaExistente.getCliente().getNombres());
+		        System.out.println("cuenta corriente: " + ventaExistente.getCliente().getNombre());
 		        Producto[] productos = ventaExistente.getProducto();
 		        if (productos != null){
 		            System.out.println("cantidad de producto: " + productos.length);
@@ -249,4 +253,30 @@ public class Venta {
 		            }
 		        }
 		        return null;
-		  }}
+		  }
+		  
+		  public static void listarVentas (){
+				if(Venta.listaDeVentas != null) {
+					for (Venta elemento : listaDeVentas) {
+						elemento.verDetalleDeVenta(elemento);
+					}
+				} else {
+					System.out.println("No se encontraron los datos.");
+				}
+			}
+		  
+		  public static Venta buscarVentaCodigo () {
+				int codigo; String codigoAux=null;
+				codigo = MetodosGeneral.castearEntero("Ingrese el codigo del producto a buscar: ", codigoAux);
+				for(Venta elemento : listaDeVentas) {
+					if(codigo == elemento.getCodigo()) {
+						System.out.println("La venta SI fue encontrado.");
+						return elemento;
+					}
+				}
+				System.out.println("La venta NO fue encontrado.");
+				return null;
+			}
+
+		
+}

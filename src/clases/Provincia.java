@@ -1,4 +1,6 @@
 package clases;
+import FinalprogramacionII.MetodosGeneral;
+
 
 public enum Provincia {
 	 BUENOS_AIRES ("Buenos Aires"),
@@ -29,16 +31,22 @@ public enum Provincia {
         this.descripcionProvincia = descripcionProvincia;
      }
      
- public String obtenerProvincia(){
+ public String elegirProvincia(){
          return descripcionProvincia;
         }
 
- public static Provincia fromInt(int opcion) throws Excepciones {
-
-        if (opcion < 1 || opcion > values().length) {
-         throw new Excepciones("La opccion esta mal, elegi un numero entre 1 y " + values().length + ".");
-        }
-        return values()[opcion - 1];
-       }
+ public static Provincia obtenerProvincia() {
+	 int seleccion; String seleccionAux = null;
+		
+		do {
+			System.out.println("Provincias disponibles:");
+			for(Provincia prov: Provincia.values()) {
+				System.out.println(prov.ordinal() + 1 + "." + Provincia.obtenerProvincia());
+			}
+			seleccion = MetodosGeneral.castearEntero("Seleccione alguna provincia: ", seleccionAux);
+		}while(seleccion < 1 || seleccion > 23);
+		
+		return Provincia.values()[seleccion - 1];
+	}
        
  }

@@ -1,12 +1,8 @@
 package archivos;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+
 
 public class archivo {
 		
@@ -76,61 +72,30 @@ public class archivo {
 		    carpeta.delete();
 		}
 
-		//TRADICIONAL
-		public static void escribirArchivo(String ruta, String contenido) {
-			File miArchivo = new File (ruta);
-			if (miArchivo.exists()) {
-				PrintWriter escritura = null;
-				try{
-					escritura = new PrintWriter(new FileWriter(miArchivo, true));
-					escritura.println(contenido);
-				} catch (IOException error) {
-					System.out.println("Error al escribir el archivo: " + error.getMessage());
-				} finally {
-					if (escritura != null) {
-		                escritura.close();
-		            }
-				}
-			} else {
-				System.out.println("El archivo especificado no existe.");
-			}
-		}
-			
-		public static void leerArchivo (String ruta) {
-			File miArchivo = new File (ruta);
-			if (miArchivo.exists()) {
-				BufferedReader lectura = null;
-				try {
-					lectura = new BufferedReader(new FileReader(miArchivo));
-					String contenido = lectura.readLine();
-					while (contenido != null) {
-						System.out.println(contenido);
-						contenido = lectura.readLine();
-					}
-				} catch (FileNotFoundException error) {
-					System.out.println(error.getMessage());
-				} catch ( IOException error) {
-					System.out.println(error.getMessage());
-				} finally {
-					if (lectura != null) {
-						try {
-							lectura.close();
-						} catch (IOException error) {
-							System.out.println(error.getMessage());
-						}
-					}
-				}
-			} else {
-				System.out.println("El archivo especificado no existe.");
-			}
-		}
-
-		public static void cargarDatos() {
-			// TODO Auto-generated method stub
-			
-		}
+		
+		
+		public static void guardarDatos() {
+			File carpeta = new File("Carpeta General");
+		    if (carpeta.exists() == false) {
+		    	archivo.crearCarpeta("Carpeta General");
+		    	if(carpeta.length() == 0) {
+			    	ArchivoPersona.crearArchivoPersona();
+			    	ArchivoEmpleado.crearArchivoEmpleado();
+					ArchivoCliente.crearArchivoCliente();
+					ArchivoProveedor.crearArchivoProveedor();
+					ArchivoUsuario.crearArchivoUsuario();
+					ArchivoProducto.crearArchivoProducto();
+					ArchivoMovimiento.crearArchivoMovimiento();
+					ArchivoVenta.crearArchivoVenta();
+					ArchivoCuentaCorriente.crearArchivoCtaCte();
+					ArchivoUsuario.crearArchivoUsuario();
+		    	}
+		    }
+		
 		
 	}
+		
+}
 		
 		
 		

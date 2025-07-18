@@ -6,40 +6,25 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
-
 import clases.Cliente;
 
 public class ArchivoCliente {
 
-    private String rutaArchivo;
-
-    public ArchivoCliente(String rutaArchivo) {
-        this.rutaArchivo = rutaArchivo;
-        crearArchivoSiNoExiste();
-    }
-
-    private void crearArchivoSiNoExiste() {
-        File archivo = new File(rutaArchivo);
-        try {
-            File carpeta = archivo.getParentFile();
-            if (carpeta != null && !carpeta.exists()) {
-                carpeta.mkdirs(); // Crea la carpeta si no existe
-            }
-
-            if (!archivo.exists()) {
-                if (archivo.createNewFile()) {
-                    System.out.println("Archivo de clientes creado.");
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error al crear el archivo: " + e.getMessage());
-        }
-    }
-
-    public static void crearArchivoCliente(String rutaArchivo) {
-        new ArchivoCliente(rutaArchivo);
-    }
+	public static void crearArchivoCliente() {
+		String ruta = "Carpeta General" + File.separator + "cliente.dat";
+		File archivo = new File(ruta);
+		if (archivo.exists()==false){
+			try {
+				if (archivo.createNewFile()) {
+					System.out.println("El archivo se creó con exito");
+				}
+			} catch (IOException error) {
+				System.out.println("ERROR: " + error.getMessage());
+			}
+		} else {
+			System.out.println("El archivo que intenta crear ya existe.");
+		}
+	}
 
     public static void eliminarArchivoCliente(String rutaArchivo) {
         File archivo = new File(rutaArchivo);
@@ -54,34 +39,29 @@ public class ArchivoCliente {
         }
     }
 
-    // Guardar un cliente al archivo (agregando a la lista)
-    public void guardarCliente(Cliente cliente) {
-        List<Cliente> clientes = cargarClientes(); // Cargar existentes
-        clientes.add(cliente); // Agregar nuevo
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(rutaArchivo))) {
-            oos.writeObject(clientes);
-            System.out.println("Cliente guardado con éxito.");
-        } catch (IOException e) {
-            System.out.println("Error al guardar el cliente: " + e.getMessage());
-        }
-    }
+    public static void guardarClientes() {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Carpeta General" + File.separator + "cliente.dat"))) {
+			oos.writeObject(Cliente.listaClientes);
+			System.out.println("Archivo cliente guardado correctamente.");
+		} catch (IOException error) {
+			System.out.println("Error al guardar: " + error.getMessage());
+		}
+	}
 
-    // Cargar todos los clientes del archivo
-    public List<Cliente> cargarClientes() {
-        File archivo = new File(rutaArchivo);
-        if (!archivo.exists() || archivo.length() == 0) {
-            return new ArrayList<>(); // Retorna lista vacía si el archivo está vacío
-        }
+	// DESERIALIZAR
+	public static void cargarClientes() {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Carpeta General" + File.separator + "cliente.dat"))) {
+			Cliente.listaClientes = extracte(ois);
+			System.out.println("Archivo cliente cargado correctamente.");
+		} catch (IOException error) {
+			System.out.println("Error al cargar: " + error.getMessage());
+		} catch (ClassNotFoundException error) {
+			System.out.println("Clase no encontrada: " + error.getMessage());
+		}
+	}
 
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(rutaArchivo))) {
-            return extracted(ois);
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error al cargar los clientes: " + e.getMessage());
-            return new ArrayList<>();
-        }
-    }
-
-	private List<Cliente> extracted(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-		return (List<Cliente>) ois.readObject();
+	private static ArrayList<Cliente> extracte(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+		ArrayList <Cliente> object = extracte(ois);
+		return object;
 	}
 }

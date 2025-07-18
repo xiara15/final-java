@@ -7,6 +7,11 @@ import java.util.Scanner;
 public class Excepciones extends Exception {
  
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public Excepciones(String mensaje) {
         super(mensaje);
     }
@@ -48,19 +53,22 @@ public class Excepciones extends Exception {
     public static int castearEntero(String mensaje) {
         int num = 0;
         boolean flag = true;
-        Scanner entrada = new Scanner(System.in);
-
-        do {
-            System.out.print(mensaje);
-            String dato = entrada.nextLine();
-            if (verificarEntero(dato)) {
-                num = Integer.parseInt(dato);
-                flag = true;
-            } else {
-                flag = false;
-                System.out.println("verifique el dato ingresado.");
-            }
-        } while (!flag);
+        try (Scanner entrada = new Scanner(System.in)) {
+			do {
+			    System.out.print(mensaje);
+			    String dato = entrada.nextLine();
+			    if (verificarEntero(dato)) {
+			        num = Integer.parseInt(dato);
+			        flag = true;
+			    } else {
+			        flag = false;
+			        System.out.println("verifique el dato ingresado.");
+			    }
+			} while (!flag);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         return num;
     }
@@ -68,19 +76,22 @@ public class Excepciones extends Exception {
     public static double castearDecimal(String mensaje) {
         double num = 0;
         boolean flag = true;
-        Scanner entradaTeclado = new Scanner(System.in);
-
-        do {
-            System.out.print(mensaje);
-            String dato = entradaTeclado.nextLine();
-            if (verificarDecimal(dato)) {
-                num = Double.parseDouble(dato);
-                flag = true;
-            } else {
-                flag = false;
-                System.out.println("verifique el dato ingresado.");
-            }
-        } while (!flag);
+        try (Scanner entradaTeclado = new Scanner(System.in)) {
+			do {
+			    System.out.print(mensaje);
+			    String dato = entradaTeclado.nextLine();
+			    if (verificarDecimal(dato)) {
+			        num = Double.parseDouble(dato);
+			        flag = true;
+			    } else {
+			        flag = false;
+			        System.out.println("verifique el dato ingresado.");
+			    }
+			} while (!flag);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
         return num;
     }
@@ -112,3 +123,4 @@ public class Excepciones extends Exception {
         return true;
     }
 }
+

@@ -1,4 +1,5 @@
 package clases;
+import FinalprogramacionII.MetodosGeneral;
 
 public enum Sexo {
     MASCULINO("Masculino"),
@@ -12,13 +13,20 @@ public enum Sexo {
     }
 
     public String ObtenerSexo(){
-        return SaberSexo;
+        return this.SaberSexo;
     }
 
-    public static Sexo fromInt(int opcion) throws Excepciones {
-        if (opcion < 1 || opcion > values().length) {
-            throw new Excepciones("La opccion esta mal, elegi un numero entre 1 y " + values().length + ".");
-        }
-        return values()[opcion - 1];
-    }
+    public static Sexo elegirSexo (){
+int seleccion = 0; String seleccionAux = null;
+		
+		do {
+			System.out.println("Generos disponibles:");
+			for(Sexo genero: Sexo.values()) {
+				System.out.println(genero.ordinal() + 1 + "." + genero.ObtenerSexo());
+			}
+			seleccion = MetodosGeneral.castearEntero("Seleccione algún genero: ", seleccionAux);
+		}while(seleccion < 1 || seleccion > 3);
+		
+		return Sexo.values()[seleccion - 1];
+	}
 }
