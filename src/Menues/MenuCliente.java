@@ -44,6 +44,7 @@ public class MenuCliente {
 			Menu.menusDatos();
 		}
 				
+		//INGRESO CLIENTE 
 		public static void menuIngresoCliente(ArrayList <Cliente> lista) {
 			System.out.println("Bienvenido al menú de ingreso de datos de cliente/s:");
 			System.out.println("1 - Ingresar un cliente.");
@@ -100,6 +101,7 @@ public class MenuCliente {
 			Menu.menusIngresar();
 		}
 		
+		//MENU CLIENTE 
 		public static void menuCliente(Cliente cliente, ArrayList <Cliente> lista) {
 			if(lista != null) {
 				System.out.println("Bienvenido al menú general de cliente/s:");
@@ -139,6 +141,7 @@ public class MenuCliente {
 			MenuCliente.menuIngresoCliente(lista);
 		}
 		
+		//SELECCCION CLIENTE 
 		public static Cliente menuSelectCliente(ArrayList <Cliente> lista) {
 			if(lista != null) {
 				int cont = 1, limit = lista.size();

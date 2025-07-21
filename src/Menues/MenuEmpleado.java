@@ -44,6 +44,8 @@ public class MenuEmpleado {
 			Menu.menusDatos();
 		}
 				
+		
+		//INGRESO EMPLEADO
 		public static void menuIngresoEmpleado(ArrayList <Empleado> lista) {
 			System.out.println("Bienvenido al menú de ingreso de datos de empleado/s:");
 			System.out.println("1 - Ingresar un empleado.");
@@ -91,6 +93,7 @@ public class MenuEmpleado {
 			Menu.menusIngresar();
 		}
 		
+		//MENU EMPLEADO
 		public static void menuEmpleado(Empleado empleado, ArrayList <Empleado> lista) {
 			if(empleado != null && lista != null) {
 				System.out.println("Bienvenido al menú general de empleado/s:");
@@ -130,6 +133,7 @@ public class MenuEmpleado {
 			}
 		}
 		
+		//MENU SELECCION EMPLEADO
 		public static Empleado menuSelectEmpleado(ArrayList <Empleado> lista) {
 			if(lista != null) {
 				int cont = 1, limit = lista.size();

@@ -1,5 +1,7 @@
 package clases;
 
+import FinalprogramacionII.MetodosGeneral;
+
 public enum Categoria {
     INDUMENTARIA("indumentaria"),
     CALZADO("calzado"),
@@ -14,11 +16,19 @@ public enum Categoria {
         return descripcionCategoria;
     }
 
-    public static Categoria fromInt(int opcion) throws Excepciones {
-        if (opcion < 1 || opcion > values().length) {
-            throw new Excepciones("opcion invalida. elija un numero entre 1 y " + values().length + ".");
-        }
-        return values()[opcion - 1];
-    }
-}
+    public static Categoria escogerCategoria () {
+		int seleccion; String seleccionAux = null;
+		
+		do {
+			System.out.println("Provincias disponibles:");
+			for(Categoria cate: Categoria.values()) {
+				System.out.println(cate.ordinal() + 1 + "." + cate.obtenerCategoria());
+			}
+			seleccion = MetodosGeneral.castearEntero("Seleccione alguna categoria: ", seleccionAux);
+		}while(seleccion < 1 || seleccion > 3);
+		
+		return Categoria.values()[seleccion - 1];
+	}
 
+    
+}

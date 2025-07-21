@@ -10,69 +10,60 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import clases.Empleado;
 
+
 public class ArchivoEmpleado {
+	
+	// CREAR ARCHIVO
+	public static void crearArchivoEmpleado() {
+		String ruta = "Carpeta General" + File.separator + "empleado.dat";
+		File archivo = new File(ruta);
+		if (archivo.exists()==false){
+			try {
+				if (archivo.createNewFile()) {
+					System.out.println("El archivo se creó con exito");
+				}
+			} catch (IOException error) {
+				System.out.println("ERROR: " + error.getMessage());
+			}
+		} else {
+			System.out.println("El archivo que intenta crear ya existe.");
+		}
+	}
+	
+	// ELIMINAR ARCHIVO
+	public static void eliminarArchivoEmpleado() {
+		String ruta = "Carpeta General" + File.separator + "empleado.dat";
+		File miArchivo = new File (ruta);
+		if (miArchivo.exists()){
+			if (miArchivo.delete()) {
+				System.out.println("Se ha eliminado correctamente el archivo.");
+			} else {
+				System.out.println("No se ha podido eliminar el archivo.");
+			}
+		} else {
+			System.out.println("No se elimino nada porque no existe.");
+		}
+	}
 
-    private static final String RUTA_ARCHIVO = "Carpeta General" + File.separator + "empleado.dat";
+	// SERIALIZAR
+	public static void guardarEmpleados() {
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Carpeta General" + File.separator + "empleado.dat"))) {
+			oos.writeObject(Empleado.listaEmpleados);
+			System.out.println("Archivo empleado guardado correctamente.");
+		} catch (IOException error) {
+			System.out.println("Error al guardar: " + error.getMessage());
+		}
+	}
 
-    public static ArrayList<Empleado> listaEmpleados = new ArrayList<>();
-
-    // CREAR ARCHIVO
-    public static void crearArchivoEmpleado() {
-        File archivo = new File(RUTA_ARCHIVO);
-        if (!archivo.exists()) {
-            try {
-                if (archivo.createNewFile()) {
-                    System.out.println("El archivo se creó con éxito.");
-                }
-            } catch (IOException error) {
-                System.out.println("ERROR al crear archivo: " + error.getMessage());
-            }
-        } else {
-            System.out.println("El archivo que intenta crear ya existe.");
-        }
-    }
-
-    // ELIMINAR ARCHIVO
-    public static void eliminarArchivoEmpleado() {
-        File archivo = new File(RUTA_ARCHIVO);
-        if (archivo.exists()) {
-            if (archivo.delete()) {
-                System.out.println("Se ha eliminado correctamente el archivo.");
-            } else {
-                System.out.println("No se ha podido eliminar el archivo.");
-            }
-        } else {
-            System.out.println("No se eliminó nada porque no existe.");
-        }
-    }
-
-    // SERIALIZAR (GUARDAR DATOS)
-    public static void guardarEmpleados() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(RUTA_ARCHIVO))) {
-            oos.writeObject(listaEmpleados);
-            System.out.println("Archivo de empleados guardado correctamente.");
-        } catch (IOException error) {
-            System.out.println("Error al guardar: " + error.getMessage());
-        }
-    }
-
-    // DESERIALIZAR (CARGAR DATOS)
-    public static void cargarEmpleados() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(RUTA_ARCHIVO))) {
-            listaEmpleados = extraerLista(ois);
-            System.out.println("Archivo de empleados cargado correctamente.");
-        } catch (IOException error) {
-            System.out.println("Error al cargar: " + error.getMessage());
-        } catch (ClassNotFoundException error) {
-            System.out.println("Clase no encontrada: " + error.getMessage());
-        }
-    }
-
-    // MÉTODO AUXILIAR PARA CASTEO
-    @SuppressWarnings("unchecked")
-    private static ArrayList<Empleado> extraerLista(ObjectInputStream ois)
-            throws IOException, ClassNotFoundException {
-        return (ArrayList<Empleado>) ois.readObject();
-    }
+	// DESERIALIZAR
+	public static void cargarEmpleados() {
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Carpeta General" + File.separator + "empleado.dat"))) {
+			Empleado.listaEmpleados = (ArrayList <Empleado>) ois.readObject();
+			System.out.println("Archivo empleado cargado correctamente.");
+		} catch (IOException error) {
+			System.out.println("Error al cargar: " + error.getMessage());
+		} catch (ClassNotFoundException error) {
+			System.out.println("Clase no encontrada: " + error.getMessage());
+		}
+	}
 }
-

@@ -12,6 +12,10 @@ public class Producto implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static ArrayList<Producto> listaProducto = new ArrayList<>();
+	
+
+	//ATRIBUTOS
 	private int codigo;
     private String detalle;
     private double precio;
@@ -19,8 +23,9 @@ public class Producto implements Serializable {
     private String material;
     private Categoria categoria;
     private int stock;
-
-    public Producto(int codigo, String detalle, double precio, String marca, String material, Categoria categoria, int stock) {
+    
+    //CONSTRUCTORES
+    public Producto() {
         this.codigo = codigo;
         this.detalle = detalle;
         this.precio = precio;
@@ -30,12 +35,6 @@ public class Producto implements Serializable {
         this.stock = stock;
     }
 
-    public Producto() {
-        // Constructor vacío
-    }
-
-    public static ArrayList<Producto> listaProducto = new ArrayList<>();
-	
 
     // Getters y setters
     public int getCodigo() { return codigo; }
@@ -59,8 +58,9 @@ public class Producto implements Serializable {
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
 
-    // Métodos principales
-
+//METODOS 
+    
+    //ALTA PRODUCTO
     public Producto altaProducto() {
         try (Scanner entrada = new Scanner(System.in)) {
             int codigo = MetodosGeneral.castearEntero("Ingrese el código del producto: ", detalle);
@@ -78,39 +78,32 @@ public class Producto implements Serializable {
             }
 
             System.out.println("Nombre del producto: ");
-            String detalle = entrada.nextLine();
-            double precio = MetodosGeneral.castearDecimal("Ingrese el precio del producto: ", detalle);
             System.out.println("Ingrese la marca del producto: ");
-            String marca = entrada.nextLine();
             System.out.println("Ingrese el material del producto: ");
-            String material = entrada.nextLine();
-
             System.out.println("Seleccione la categoría del producto: ");
             Categoria[] categorias = Categoria.values();
-            Categoria categoria = null;
             boolean flag = false;
             do {
                 for (int i = 0; i < categorias.length; i++) {
                     System.out.println((i + 1) + ". " + categorias[i].obtenerCategoria());
                 }
-                int opcion = MetodosGeneral.castearEntero("Elija una opción: ", material);
+                int opcion = MetodosGeneral.castearEntero("Elija una opción: ", detalle);
                 if (opcion >= 1 && opcion <= categorias.length) {
-                    categoria = categorias[opcion - 1];
                     flag = true;
                 } else {
                     System.out.println("Intente nuevamente.");
                 }
             } while (!flag);
 
-            int stock = MetodosGeneral.castearEntero("Ingrese el stock del producto: ", material);
-
-            Producto nuevoProducto = new Producto(codigo, detalle, precio, marca, material, categoria, stock);
+            Producto nuevoProducto = new Producto();
             listaProducto.add(nuevoProducto);
             System.out.println("Producto creado con éxito.");
             return nuevoProducto;
         }
     }
 
+    
+    //BAJA PRODUCTO
     public void bajaProducto() {
         int codigo = MetodosGeneral.castearEntero("Ingrese el código del producto a eliminar: ", detalle);
         Producto productoExistente = buscarProductoCodigo(codigo);
@@ -122,6 +115,8 @@ public class Producto implements Serializable {
         System.out.println("El producto fue eliminado.");
     }
 
+    
+    //MODIFICAR PRODUCTO
     public void modificarProducto() {
         int codigo = MetodosGeneral.castearEntero("Ingrese el código del producto a modificar: ", detalle);
         Producto productoExistente = buscarProductoCodigo(codigo);
@@ -197,6 +192,8 @@ public class Producto implements Serializable {
         System.out.println("Producto modificado con éxito.");
     }
 
+    
+    //BUSCAR PRODUCTO
     public static Producto buscarProductoCodigo(int codigo) {
         for (Producto p : listaProducto) {
             if (p.getCodigo() == codigo) {
@@ -206,6 +203,8 @@ public class Producto implements Serializable {
         return null;
     }
 
+    
+    //VER DETALLE PRODUCTO
     public static void verDetalleProducto() {
         if (listaProducto.isEmpty()) {
             System.out.println("No hay productos registrados.");
@@ -223,6 +222,8 @@ public class Producto implements Serializable {
         }
     }
 
+    
+    //MENU DE PRODUCTOS
     public void menuProducto() {
         try (Scanner entrada = new Scanner(System.in)) {
             int opcion;

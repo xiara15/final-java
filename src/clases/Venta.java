@@ -13,14 +13,15 @@ public class Venta implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private int codigo;
+	static String detalle;
 	    private Cliente cliente;
 	    private int cantidad;
-	    private Producto[] producto; //limite de 10 productos
+	    private static Producto[] producto; //limite de 10 productos
 	    private double total;
 	    private FormaDePago pago;
 	    public static ArrayList<Venta> listaDeVentas = new ArrayList<>();
 
-	    public Venta(int codigo, Cliente cliente, int cantidad, Producto[] producto, double total, FormaDePago pago) {
+	    public Venta(int codigo, String detalle, Cliente cliente, int cantidad, Producto[] producto, double total, FormaDePago pago) {
 	        this.codigo = codigo;
 	        this.cliente = cliente;
 	        this.cantidad = cantidad;
@@ -47,6 +48,14 @@ public class Venta implements Serializable{
 		public void setCantidad(int cantidad) {
 			this.cantidad = cantidad;
 		}
+		public String getDetalle() {
+			return detalle;
+		}
+
+		public void setDetalle(String detalle) {
+			this.detalle = detalle;
+		}
+
 		public Producto[] getProducto() {
 			return producto;
 		}
@@ -73,7 +82,7 @@ public class Venta implements Serializable{
 		}
 
 //metodos 
-		  public Venta altaVenta(Cliente cliente, Vector<Producto> vector){
+		  public static Venta altaVenta(Cliente cliente, Vector<Producto> vector){
 		        try (Scanner entrada = new Scanner(System.in)) {
 					int codigo = Excepciones.castearEntero("ingrese el codigo de la venta: ");
 
@@ -115,13 +124,13 @@ public class Venta implements Serializable{
 					System.out.println("Seleccione la forma de pago: ");
 					FormaDePago[] formasDePago = FormaDePago.values();
 					for (int i = 0; i < formasDePago.length; i++) {
-					    System.out.println((i + 1) + ". " + formasDePago[i].optenerFormaDePago());
+					    System.out.println((i + 1) + ". " + formasDePago[i].obtenerFormaDePago());
 					}
 					int opcionPago = entrada.nextInt();
 					entrada.nextLine();
 					FormaDePago pago = formasDePago[opcionPago - 1];
 
-					Venta nuevaVenta = new Venta(codigo,cliente,cantidad,producto,total,pago);
+					Venta nuevaVenta = new Venta(codigo, detalle, cliente,cantidad,producto,total,pago);
 					listaDeVentas.add(nuevaVenta);
 					System.out.println("venta creada con exito: ");
 
@@ -199,7 +208,7 @@ public class Venta implements Serializable{
 					            System.out.println("elija la forma de pago: ");
 					            FormaDePago[] formaDePago = FormaDePago.values();
 					            for (int i = 0; i < formaDePago.length; i++){
-					            System.out.println((i+1) + " ." + formaDePago[i].optenerFormaDePago());
+					            System.out.println((i+1) + " ." + formaDePago[i].obtenerFormaDePago());
 					            }
 
 					            int opcionPago = entrada.nextInt();
@@ -244,9 +253,9 @@ public class Venta implements Serializable{
 		            System.out.println("no hay productos a la venta: ");
 		        }
 		        System.out.println("Total: $" + ventaExistente.getTotal());
-		        System.out.println("Forma de Pago: " + ventaExistente.getPago().optenerFormaDePago());
+		        System.out.println("Forma de Pago: " + ventaExistente.getPago().obtenerFormaDePago());
 		    }
-		  public Venta busquedaDeVentas(int codigo){
+		  public static Venta busquedaDeVentas(int codigo){
 		        for (Venta venta : listaDeVentas){
 		            if (venta.getCodigo() == codigo){
 		                return venta;

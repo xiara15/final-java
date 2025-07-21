@@ -1,5 +1,7 @@
 package clases;
 
+import FinalprogramacionII.MetodosGeneral;
+
 public enum FormaDePago {
 
 	EFECTIVO("Efectivo"),
@@ -14,13 +16,21 @@ public enum FormaDePago {
         this.descripcion = descripcion;
 }
 
-public String  optenerFormaDePago(){
+public String  obtenerFormaDePago(){
     return descripcion;
 }
-public static FormaDePago fromInt(int opcion) throws Excepciones {
-    if (opcion < 1 || opcion > values().length) {
-        throw new Excepciones("opcion invalida. elija un numero entre 1 y " + values().length + ".");
-    }
-    return values()[opcion - 1];
+
+public static FormaDePago escogerFomaPago () {
+	int seleccion; String seleccionAux = null;
+	
+	do {
+		System.out.println("Formas de pago disponibles:");
+		for(FormaDePago forma: FormaDePago.values()) {
+			System.out.println(forma.ordinal() + 1 + "." + forma.obtenerFormaDePago());
+		}
+		seleccion = MetodosGeneral.castearEntero("Seleccione alguna forma de pago: ", seleccionAux);
+	}while(seleccion < 1 || seleccion > 5);
+	
+	return FormaDePago.values()[seleccion - 1];
 }
 }

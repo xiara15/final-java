@@ -13,8 +13,6 @@ public class Proveedor extends Persona implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	// Lista estática de proveedores
     public static ArrayList<Proveedor> listaProveedores;
 
     // Atributos
@@ -37,11 +35,13 @@ public class Proveedor extends Persona implements Serializable {
         this.ctacte = ctacte;
     }
 
-    // MÉTODOS
-
+// MÉTODOS
+    
+    
+    // ALTA PROVEEDOR
     public static void altaProveedor(CuentaCorriente ctacte) {
         if (ctacte != null) {
-            String nombre, apellido, DNI = null, telefono, direccion, localidad;
+            String nombre, apellido, telefono, direccion, localidad = null;
             int dni;
             LocalDate fechaNac;
             Provincia prov;
@@ -56,7 +56,7 @@ public class Proveedor extends Persona implements Serializable {
                 System.out.println("Ingrese el apellido: ");
                 apellido = teclado.nextLine();
 
-                dni = MetodosGeneral.castearEntero("Ingrese su DNI:", DNI);
+                dni = MetodosGeneral.castearEntero("Ingrese su DNI:", localidad);
 
                 genero = Sexo.elegirSexo();
 
@@ -68,7 +68,7 @@ public class Proveedor extends Persona implements Serializable {
 
                 fechaNac = MetodosGeneral.crearFecha("Ingrese fecha de nacimiento:");
 
-                prov = Provincia.obtenerProvincia();
+                prov = Provincia.escogerProvincia();
 
                 System.out.println("Ingrese la localidad: ");
                 localidad = teclado.nextLine();
@@ -94,6 +94,8 @@ public class Proveedor extends Persona implements Serializable {
         }
     }
 
+    
+    //DATOS PROVEEDOR
     public void datosProveedor(Proveedor proveedor) {
         if (proveedor != null) {
             super.datosPersona(proveedor);
@@ -103,6 +105,7 @@ public class Proveedor extends Persona implements Serializable {
         }
     }
 
+    //MODIFICAR PROVEEDOR
     public void modificarProveedor(Proveedor proveedor) {
         if (proveedor != null) {
             super.modificarPersona(proveedor);
@@ -110,11 +113,10 @@ public class Proveedor extends Persona implements Serializable {
             System.out.println("1 - Modificar cuenta corriente.");
             System.out.println("2 - Salir.");
 
-            String numAux = null;
             int num;
 
             do {
-                num = MetodosGeneral.castearEntero("Seleccione: ", numAux);
+                num = MetodosGeneral.castearEntero("Seleccione: ", getDireccion());
             } while (num < 1 || num > 2);
 
             switch (num) {
@@ -132,6 +134,8 @@ public class Proveedor extends Persona implements Serializable {
         }
     }
 
+    
+    //LISTAR PROVEEDOR
     public static void listarProveedor() {
         if (listaProveedores != null && !listaProveedores.isEmpty()) {
             for (Proveedor elemento : listaProveedores) {
@@ -142,10 +146,10 @@ public class Proveedor extends Persona implements Serializable {
         }
     }
 
+    //BUSCAR PROVEEDOR
     public static Proveedor buscarProveedor() {
         int num;
-        String numAux = null;
-        num = MetodosGeneral.castearEntero("Ingrese el DNI del proveedor a buscar: ", numAux);
+        num = MetodosGeneral.castearEntero("Ingrese el DNI del proveedor a buscar: ", apellido);
 
         for (Proveedor elemento : listaProveedores) {
             if (num == elemento.getDni()) {
@@ -157,6 +161,8 @@ public class Proveedor extends Persona implements Serializable {
         return null;
     }
 
+    
+    //VER CUENTA CORRIENTE
     public void verCtaCte(CuentaCorriente ctacte) {
         if (ctacte != null) {
             ctacte.datosCtaCte(ctacte.getMovimiento());

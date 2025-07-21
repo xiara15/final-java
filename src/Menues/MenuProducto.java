@@ -8,7 +8,7 @@ import clases.Producto;
 
 public class MenuProducto {
 
-   
+	   
     // Muestra los datos de UN solo producto
     private static void mostrarProducto(Producto p) {
         System.out.println("----- Detalle Producto -----");

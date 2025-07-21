@@ -3,22 +3,26 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
-	
+
+import FinalprogramacionII.MetodosGeneral;
+
 public class Empleado extends Persona implements Serializable{
 
 	    /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static ArrayList<Empleado> listaEmpleados;
+	
+	//atributos
 		private static int length;
 		private LocalDate fechaIngreso;
 	    private LocalDate fechaEgreso;
 	    private  int legajo;
 	    private double salario;
-		public static ArrayList<Empleado> listaEmpleados;
 	
 
-	 
+	 //constructor
 public Empleado(int dni, boolean activo, String nombre, String apellido, String telefono, String direccion, Provincia provincia, String localidad, LocalDate fechaNacimiento, Sexo sexo, LocalDate fechaIngreso, LocalDate fechaEgreso, int legajo, double salario) {
 	        //indica que estás llamando al constructor de la clase padre para inicializar los atributos heredados de esa clase.
 	    	super(dni, activo, nombre, apellido, telefono, direccion, provincia, localidad, fechaNacimiento, sexo);
@@ -29,6 +33,8 @@ public Empleado(int dni, boolean activo, String nombre, String apellido, String 
 	        this.salario = salario;
 	    }
 
+
+//get y set
 public LocalDate getFechaIngreso() {
 	return fechaIngreso;
 }
@@ -61,8 +67,10 @@ public void setSalario(double salario) {
 	this.salario = salario;
 }
 
-//metodos personalizados para empleado
+//METODOS
 
+
+//ALTA EMPLEADO
 public static void altaEmpleado(){
     int dni = Excepciones.castearEntero("ingrese el dni: ");
 
@@ -99,42 +107,44 @@ public static void altaEmpleado(){
             null,
             legajo,
             salario);
-    extracted(nuevoEmpleado).setActivo(true);
+    (nuevoEmpleado).setActivo(true);
     System.out.println("empleado creado con exito");
 
 }
 
+//BAJA EMPLEADO
 public void bajaEmpleado() {
     int dniBuscado = Excepciones.castearEntero("ingrese el dni: ");
 
     Empleado empleadoEncontrado = null;
     for (Empleado empleado : listaEmpleados) {
-        if (extracted(empleado).getDni() == dniBuscado) {
-            empleadoEncontrado = extracted(empleado);
+        if ((empleado).getDni() == dniBuscado) {
+            empleadoEncontrado = (empleado);
             break;
         }
     }
 
-    if (extracted(empleadoEncontrado) == null) {
+    if ((empleadoEncontrado) == null) {
         System.out.println("no se encontro el dni ingresado.");
         return;
     }
 
-    if (!extracted(empleadoEncontrado).isActivo()) {
+    if (!(empleadoEncontrado).isActivo()) {
         System.out.println("el empleado ya esta dado de baja.");
         return;
     }
 
     LocalDate fechaEgreso = Excepciones.crearFecha("ingrese la fecha de egreso del empleado:");
 
-    extracted(empleadoEncontrado).setActivo(false);
-    extracted(empleadoEncontrado).setFechaEgreso(fechaEgreso);
+    (empleadoEncontrado).setActivo(false);
+    (empleadoEncontrado).setFechaEgreso(fechaEgreso);
     System.out.println("empleado ha sido dado de baja exitosamente.");
 }
 
-public void modificarEmpleado(Empleado elemento) {
+//MODIFICAR EMPLEADO
+public void modificarEmpleado(Empleado empleado) {
     try (Scanner scanner = new Scanner(System.in)) {
-		// Mostrar menú de opciones para modificar
+		
 		    System.out.println("¿Qué deseas modificar?");
 		    System.out.println("1. Nombre");
 		    System.out.println("2. Apellido");
@@ -144,40 +154,42 @@ public void modificarEmpleado(Empleado elemento) {
 		    System.out.println("6. Fecha de ingreso");
 		    System.out.println("0. Salir");
 
-		    int opcion1 = scanner.nextInt();
-		    scanner.nextLine(); // Limpiar el buffer
-
-		    Empleado empleado = null;
-			switch (opcion1) {
+		    int num=0;
+			do {
+				num = MetodosGeneral.castearEntero("Seleccione: ", apellido);
+			}while(num < 1 || num > 5);
+			
+			switch(num) {
+		
 		        case 1:
 		            System.out.print("Ingrese el nuevo nombre: ");
 		            String nuevoNombre = scanner.nextLine();
-		            extracted(empleado).setNombre(nuevoNombre);
+		            empleado.setNombre(nuevoNombre);
 		            break;
 		        case 2:
 		            System.out.print("Ingrese el nuevo apellido: ");
 		            String nuevoApellido = scanner.nextLine();
-		            extracted(empleado).setApellido(nuevoApellido);
+		            (empleado).setApellido(nuevoApellido);
 		            break;
 		        case 3:
 		            System.out.print("Ingrese el nuevo teléfono: ");
 		            String nuevoTelefono = scanner.nextLine();
-		            extracted(empleado).setTelefono(nuevoTelefono);
+		            (empleado).setTelefono(nuevoTelefono);
 		            break;
 		        case 4:
 		            System.out.print("Ingrese la nueva dirección: ");
 		            String nuevaDireccion = scanner.nextLine();
-		            extracted(empleado).setDireccion(nuevaDireccion);
+		            (empleado).setDireccion(nuevaDireccion);
 		            break;
 		        case 5:
 		            System.out.print("Ingrese el nuevo salario: ");
 		            double nuevoSalario = scanner.nextDouble();
-		            extracted(empleado).setSalario(nuevoSalario);
+		            (empleado).setSalario(nuevoSalario);
 		            break;
 		        case 6:
 		            System.out.print("Ingrese la nueva fecha de ingreso (yyyy-MM-dd): ");
 		            String nuevaFechaIngreso = scanner.nextLine();
-		            extracted(empleado).setFechaIngreso(java.time.LocalDate.parse(nuevaFechaIngreso));
+		            (empleado).setFechaIngreso(java.time.LocalDate.parse(nuevaFechaIngreso));
 		            break;
 		        case 0:
 		            System.out.println("Modificación cancelada.");
@@ -190,11 +202,8 @@ public void modificarEmpleado(Empleado elemento) {
 	
     }
 
-private static Empleado extracted(Empleado empleado) {
-	return empleado;
-} 
 
-
+// BUSCAR EMPLEADO
 public static Persona buscarEmpleado(){
     try (Scanner entrada = new Scanner(System.in)) {
 	}
@@ -222,7 +231,7 @@ public static Persona buscarEmpleado(){
 	return empleadoEncontrado;}
 
 
-    
+    //DATOS EMPLEADO
 public void datosEmpleado (Empleado empleado) {
 	if(empleado != null) {
 		super.datosPersona(empleado);
@@ -238,6 +247,7 @@ public void datosEmpleado (Empleado empleado) {
 	}
 }
 
+//LISTAR EMPLEADO
     public static void ListarEmpleado() {
         if (Empleado.length == 0) {
             System.out.println("no hay personas registradas.");
@@ -250,7 +260,7 @@ public void datosEmpleado (Empleado empleado) {
                 System.out.println("telefono: " + empleado.getTelefono());
                 System.out.println("direccion: " + empleado.getDireccion());
                 empleado.getProvincia();
-				System.out.println("provincia: " + Provincia.obtenerProvincia());
+				System.out.println("provincia: " + Provincia.escogerProvincia());
                 System.out.println("localidad: " + empleado.getLocalidad());
                 System.out.println("fecha de nacimiento: " + empleado.getFechaNacimiento());
                 System.out.println("sexo: " + empleado.getSexo().ObtenerSexo());

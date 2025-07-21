@@ -2,7 +2,6 @@ package FinalprogramacionII;
 
 	import java.time.LocalDate;
 	import java.util.Scanner;
-
 	public class MetodosGeneral {
 
 	    private static final Scanner entradaTeclado = new Scanner(System.in);

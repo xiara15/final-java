@@ -65,10 +65,7 @@ public class Excepciones extends Exception {
 			        System.out.println("verifique el dato ingresado.");
 			    }
 			} while (!flag);
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 
         return num;
     }
@@ -88,10 +85,7 @@ public class Excepciones extends Exception {
 			        System.out.println("verifique el dato ingresado.");
 			    }
 			} while (!flag);
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 
         return num;
     }

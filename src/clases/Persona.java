@@ -3,9 +3,7 @@ package clases;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Scanner;
-
 import FinalprogramacionII.MetodosGeneral;
 
 public class Persona implements Serializable {
@@ -17,10 +15,12 @@ public class Persona implements Serializable {
 
 	public static ArrayList<Persona> listaPersonas = new ArrayList<>();
 
+	
+	//ATRIBUTOS
     private int dni;
     private boolean activo;
     protected String nombre;
-    private String apellido;
+    protected static String apellido;
     private String telefono;
     private String direccion;
     private Provincia provincia;
@@ -28,6 +28,7 @@ public class Persona implements Serializable {
     private LocalDate fechaNacimiento;
     private Sexo sexo;
 
+    //CONSTRUCTORES
     public Persona(int dni, boolean activo, String nombre, String apellido, String telefono, String direccion,
                    Provincia provincia, String localidad, LocalDate fechaNacimiento, Sexo sexo) {
         this.dni = dni;
@@ -42,6 +43,8 @@ public class Persona implements Serializable {
         this.sexo = sexo;
     }
 
+    
+    //GET Y SET
     public int getDni() { return dni; }
     public void setDni(int dni) { this.dni = dni; }
 
@@ -72,6 +75,10 @@ public class Persona implements Serializable {
     public Sexo getSexo() { return sexo; }
     public void setSexo(Sexo sexo) { this.sexo = sexo; }
 
+    
+//METODOS
+    
+    // ALTA PERSONA
     public static void altaPersona() {
         try (Scanner teclado = new Scanner(System.in)) {
             System.out.println("Ingrese el nombre: ");
@@ -89,9 +96,9 @@ public class Persona implements Serializable {
             System.out.println("Ingrese la localidad: ");
             String localidad = teclado.nextLine();
 
-            int dni = MetodosGeneral.castearEntero("Ingrese su DNI: ", null);
+            int dni = MetodosGeneral.castearEntero("Ingrese su DNI: ", localidad);
             Sexo genero = Sexo.elegirSexo();
-            Provincia prov = Provincia.obtenerProvincia();
+            Provincia prov = Provincia.escogerProvincia();
             LocalDate fechaNac = MetodosGeneral.crearFecha("Ingrese fecha de nacimiento:");
 
             Persona nuevaPersona = new Persona(dni, true, nombre, apellido, telefono, direccion, prov, localidad, fechaNac, genero);
@@ -99,8 +106,10 @@ public class Persona implements Serializable {
         }
     }
 
+    
+    //BUSCAR PERSONA POR DNI
     public static Persona buscarPersonaDni() {
-        int num = MetodosGeneral.castearEntero("Ingrese el DNI de la persona a buscar: ", null);
+        int num = MetodosGeneral.castearEntero("Ingrese el DNI de la persona a buscar: ", apellido);
         for (Persona elemento : listaPersonas) {
             if (num == elemento.getDni()) {
                 System.out.println("La persona SI fue encontrada.");
@@ -111,6 +120,8 @@ public class Persona implements Serializable {
         return null;
     }
 
+    
+    //DATOS PERSONA
     public void datosPersona(Persona persona) {
         if (persona != null) {
             System.out.println("Datos personales:");
@@ -122,7 +133,7 @@ public class Persona implements Serializable {
             System.out.println("Telefono: " + persona.getTelefono());
             System.out.println("Direccion: " + persona.getDireccion());
             System.out.println("Fecha de nacimiento: " + persona.getFechaNacimiento());
-            System.out.println("Provincia: " + Provincia.obtenerProvincia());
+            System.out.println("Provincia: " + Provincia.escogerProvincia());
             System.out.println("Localidad: " + persona.getLocalidad());
             System.out.println("------------------------------");
         } else {
@@ -130,6 +141,7 @@ public class Persona implements Serializable {
         }
     }
 
+    //LISTAR PERSONA
     public static void listarPersonas() {
         if (listaPersonas != null && !listaPersonas.isEmpty()) {
             for (Persona elemento : listaPersonas) {
@@ -156,7 +168,7 @@ public class Persona implements Serializable {
 
 				int num;
 				do {
-				    num = MetodosGeneral.castearEntero("Seleccione: ", null);
+				    num = MetodosGeneral.castearEntero("Seleccione: ", direccion);
 				} while (num < 1 || num > 10);
 
 				switch (num) {
@@ -169,7 +181,7 @@ public class Persona implements Serializable {
 				        persona.setApellido(teclado.nextLine());
 				        break;
 				    case 3:
-				        persona.setDni(MetodosGeneral.castearEntero("Ingrese su DNI:", null));
+				        persona.setDni(MetodosGeneral.castearEntero("Ingrese su DNI:", apellido));
 				        break;
 				    case 4:
 				        persona.setSexo(Sexo.elegirSexo());
@@ -186,7 +198,7 @@ public class Persona implements Serializable {
 				        persona.setFechaNacimiento(MetodosGeneral.crearFecha("Ingrese fecha de nacimiento:"));
 				        break;
 				    case 8:
-				        persona.setProvincia(Provincia.obtenerProvincia());
+				        persona.setProvincia(Provincia.escogerProvincia());
 				        break;
 				    case 9:
 				        System.out.println("Ingrese la localidad: ");
@@ -202,6 +214,8 @@ public class Persona implements Serializable {
         }
     }
 
+    
+    //BAJA PERSONA
     public void bajaPersona(Persona persona) {
         if (persona != null) {
             persona.setActivo(false);
@@ -210,45 +224,4 @@ public class Persona implements Serializable {
         }
     }
 
-	public static ArrayList<Persona> getListaPersonas() {
-		return listaPersonas;
-	}
-
-	public static void setListaPersonas(ArrayList<Persona> listaPersonas) {
-		Persona.listaPersonas = listaPersonas;
-	}
-
-	@Override
-	public String toString() {
-		return "Persona [dni=" + dni + ", activo=" + activo + ", nombre=" + nombre + ", apellido=" + apellido
-				+ ", telefono=" + telefono + ", direccion=" + direccion + ", provincia=" + provincia + ", localidad="
-				+ localidad + ", fechaNacimiento=" + fechaNacimiento + ", sexo=" + sexo + ", getDni()=" + getDni()
-				+ ", isActivo()=" + isActivo() + ", getNombre()=" + getNombre() + ", getApellido()=" + getApellido()
-				+ ", getTelefono()=" + getTelefono() + ", getDireccion()=" + getDireccion() + ", getProvincia()="
-				+ getProvincia() + ", getLocalidad()=" + getLocalidad() + ", getFechaNacimiento()="
-				+ getFechaNacimiento() + ", getSexo()=" + getSexo() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(activo, apellido, direccion, dni, fechaNacimiento, localidad, nombre, provincia, sexo,
-				telefono);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Persona other = (Persona) obj;
-		return activo == other.activo && Objects.equals(apellido, other.apellido)
-				&& Objects.equals(direccion, other.direccion) && dni == other.dni
-				&& Objects.equals(fechaNacimiento, other.fechaNacimiento) && Objects.equals(localidad, other.localidad)
-				&& Objects.equals(nombre, other.nombre) && provincia == other.provincia && sexo == other.sexo
-				&& Objects.equals(telefono, other.telefono);
-	}
 }

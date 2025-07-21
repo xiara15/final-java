@@ -35,13 +35,13 @@ public enum Provincia {
          return descripcionProvincia;
         }
 
- public static Provincia obtenerProvincia() {
-	 int seleccion; String seleccionAux = null;
+ public static Provincia escogerProvincia () {
+		int seleccion; String seleccionAux = null;
 		
 		do {
 			System.out.println("Provincias disponibles:");
 			for(Provincia prov: Provincia.values()) {
-				System.out.println(prov.ordinal() + 1 + "." + Provincia.obtenerProvincia());
+				System.out.println(prov.ordinal() + 1 + "." + prov.elegirProvincia());
 			}
 			seleccion = MetodosGeneral.castearEntero("Seleccione alguna provincia: ", seleccionAux);
 		}while(seleccion < 1 || seleccion > 23);

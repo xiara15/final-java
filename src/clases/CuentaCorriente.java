@@ -2,8 +2,8 @@ package clases;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import FinalprogramacionII.MetodosGeneral;
+
 
 public class CuentaCorriente implements Serializable{
 
@@ -51,15 +51,16 @@ public class CuentaCorriente implements Serializable{
     
    
     
-    //metodos personales de ctacte
+ //METODOS
 	
 
+	//ALTA CLIENTE
 	public static void altaCtaCte(ArrayList<Movimiento> movimientos) {
         try (Scanner teclado = new Scanner(System.in)) {
 			System.out.print("Ingrese el detalle de la cuenta: ");
 			String detalle = teclado.nextLine();
 
-			int codigo = MetodosGeneral.castearEntero("Ingrese el código de la cuenta: ", null);
+			int codigo = MetodosGeneral.castearEntero("Ingrese el código de la cuenta: ", detalle);
 
 			CuentaCorriente nuevaCtaCte = new CuentaCorriente(movimientos, detalle, codigo);
 
@@ -72,7 +73,7 @@ public class CuentaCorriente implements Serializable{
     }
 	
 	
-
+    //AGREGAR MOVIMIENTO
 	public void agregarMovimiento (ArrayList <Movimiento> movimientos, Movimiento movimiento) {
 		if(movimiento != null && movimientos != null) {
 			movimientos.add(movimiento);
@@ -83,15 +84,15 @@ public class CuentaCorriente implements Serializable{
 	}
 	
 
-
+    //ACTUALIZAR SALDO
 	public void actualizarSaldo (Movimiento movimiento) {
 		if(movimiento != null) {
-			double nuevoSaldo; String nuevoSaldoAux=null;
+			double nuevoSaldo; 
 			System.out.println("Detalle del movimiento: " + Movimiento.getDetalle());
 			System.out.println("Su saldo actual es: " + Movimiento.getSaldo());
 			
 			if(MetodosGeneral.escogerBooleano("¿Desea actualizar su saldo?:")) {
-				nuevoSaldo = MetodosGeneral.castearDecimal("Ingrese el nuevo saldo:", nuevoSaldoAux);
+				nuevoSaldo = MetodosGeneral.castearDecimal("Ingrese el nuevo saldo:", detalle);
 				movimiento.setSaldo(nuevoSaldo);
 				movimiento.setSaldo(movimiento.calcularSaldo(movimiento));
 			}
@@ -100,6 +101,7 @@ public class CuentaCorriente implements Serializable{
 		}
 	}
 	
+	//DATOS CUENTA CORRIENTE
 	public void datosCtaCte (ArrayList <Movimiento> movimientos) {
 		if(movimientos != null) {
 			System.out.println("Detalles de la cuenta: " + this.detalle);
@@ -112,6 +114,7 @@ public class CuentaCorriente implements Serializable{
 		}
 	}
 	
+	//MODIFICAR CUENTA CORRIENTE
 	public void modificarCtaCte(CuentaCorriente ctacte) {
 		if(ctacte != null) {
 			try (Scanner teclado = new Scanner(System.in)) {
@@ -119,15 +122,14 @@ public class CuentaCorriente implements Serializable{
 				System.out.println("2 - Modificar detalle.");
 				System.out.println("3 - Salir.");
 				
-				String numAux=null; int num=0;
+				int num=0;
 				do {
-					num = MetodosGeneral.castearEntero("Seleccione: ", numAux);
+					num = MetodosGeneral.castearEntero("Seleccione: ", detalle);
 				}while(num < 1 || num > 3);
 				
 				switch(num) {
 				case 1:
-					String codigoAux = null;
-					int codigo = MetodosGeneral.castearEntero("Ingrese el codigo del movimiento:", codigoAux);
+					int codigo = MetodosGeneral.castearEntero("Ingrese el codigo del movimiento:", detalle);
 					ctacte.setCodigo(codigo);
 					break;
 					
@@ -150,6 +152,8 @@ public class CuentaCorriente implements Serializable{
 		}
 	}
 	
+	
+	//LISTAR CUENTA CORRIENTE
 	public static void listarCtaCtes() {
 		if(CuentaCorriente.listaCtactes != null) {
 			for(CuentaCorriente elemento : listaCtactes) {
@@ -160,6 +164,8 @@ public class CuentaCorriente implements Serializable{
 		}
 	}
 	
+	
+	//BUSCAR CUENTA CORRIENTE
 	public static CuentaCorriente buscarCtaCteCodigo () {
 		int codigo; String codigoAux=null;
 		codigo = MetodosGeneral.castearEntero("Ingrese el codigo del producto a buscar: ", codigoAux);
@@ -169,7 +175,7 @@ public class CuentaCorriente implements Serializable{
 				return elemento;
 			}
 		}
-		System.out.println("La venta NO fue encontrado.");
+		System.out.println("La venta no fue encontrado.");
 		return null;
 	}
 

@@ -16,6 +16,7 @@ public enum Sexo {
         return this.SaberSexo;
     }
 
+
     public static Sexo elegirSexo (){
 int seleccion = 0; String seleccionAux = null;
 		

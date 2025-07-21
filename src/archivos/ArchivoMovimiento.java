@@ -7,15 +7,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.List;
+
 
 import clases.Movimiento;
 
 public class ArchivoMovimiento {
 
-	    public static ArrayList<Movimiento> listaMovimiento = new ArrayList<>();
+	  
+	    private static Object listaMovimiento;
 
-	    // Crear archivo
+		// Crear archivo
 	    public static void crearArchivoMovimiento() {
 	        String ruta = "Carpeta General" + File.separator + "movimiento.dat";
 	        File archivo = new File(ruta);

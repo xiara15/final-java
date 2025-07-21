@@ -29,11 +29,14 @@ public class Cliente extends Persona implements Serializable {
 		this.ctacte = ctacte;
 	}
 
-	// Metodos
+// Metodos 
+	
+	//ALTA CLIENTE
 	public static void altaCliente (CuentaCorriente ctacte) {
 		if(ctacte != null) {
 			try (Scanner teclado = new Scanner(System.in)) {
-				String nombres, apellidos, telefono, direccion, localidad, dnistring = null;
+				String nombres, apellidos, telefono, direccion, localidad;
+				String dnistring = null;
 				System.out.println("Ingrese el nombre: ");
 				nombres = teclado.nextLine();
 				
@@ -52,7 +55,7 @@ public class Cliente extends Persona implements Serializable {
 				
 				LocalDate fechaNacimiento = MetodosGeneral.crearFecha("Ingrese fecha de nacimiento:");
 				
-				Provincia provincia = Provincia.obtenerProvincia();
+				Provincia provincia = Provincia.escogerProvincia();
 				
 				System.out.println("Ingrese la localidad: ");
 				localidad = teclado.nextLine();
@@ -79,6 +82,7 @@ public class Cliente extends Persona implements Serializable {
 		}
 	}
 	
+	//MODIFICAR CLIENTE
 	public void modificarCliente(Cliente cliente) {
 		if(cliente != null) {
 			super.modificarPersona(cliente);
@@ -108,6 +112,8 @@ public class Cliente extends Persona implements Serializable {
 		}
 	}
 	
+	
+	//DATOS DEL CLIENTE
 	public void datosCliente(Cliente cliente) {
 		if(cliente != null) {
 			super.datosPersona(cliente);
@@ -118,6 +124,7 @@ public class Cliente extends Persona implements Serializable {
 		}
 	}
 	
+	//LISTAR CLIENTES
 	public static void listarClientes() {
 		if(Cliente.listaClientes != null) {
 			for(Cliente elemento : listaClientes) {
@@ -128,6 +135,7 @@ public class Cliente extends Persona implements Serializable {
 		}
 	}
 	
+	//BUSCAR CLIENTE
 	public static Cliente buscarCliente() {
 		int num; String numAux=null;
 		num = MetodosGeneral.castearEntero("Ingrese el DNI del cliente a buscar: ", numAux);
@@ -141,6 +149,7 @@ public class Cliente extends Persona implements Serializable {
 		return null;
 	}
 	
+	//VER CUENTA CORRIENTE
 	public void verCtaCte(CuentaCorriente ctacte) {
 	    if (ctacte != null) {
 	        ctacte.datosCtaCte(null);
@@ -148,6 +157,8 @@ public class Cliente extends Persona implements Serializable {
 	        System.out.println("No se encontraron los datos.");
 	    }
 	}
+	
+	//ENVIAR CLIENTE
 	
 	public Cliente enviarCLiente (Cliente cliente) {
 		if(cliente != null) {

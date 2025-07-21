@@ -44,6 +44,7 @@ public class MenuMovimiento {
 			Menu.menusDatos();
 		}
 				
+		//INGRESO MOV
 		public static void menuIngresoMovimiento(ArrayList <Movimiento> lista) {
 			System.out.println("Bienvenido al menú de ingreso de datos de movimiento/s:");
 			System.out.println("1 - Ingresar un movimiento.");
@@ -100,6 +101,7 @@ public class MenuMovimiento {
 			Menu.menusIngresar();
 		}
 		
+		//MENU MOV
 		public static void menuMovimiento(Movimiento movimiento, ArrayList <Movimiento> lista) {
 			if(movimiento != null && lista != null) {
 				System.out.println("Bienvenido al menú general de movimiento/s:");
@@ -139,6 +141,7 @@ public class MenuMovimiento {
 			MenuMovimiento.menuIngresoMovimiento(lista);
 		}
 		
+		//SELECCIONAR MOVIMINETO
 		public static Movimiento menuSelectMovimiento(ArrayList <Movimiento> lista) {
 			if(lista != null) {
 				int cont = 1, limit = lista.size();
@@ -158,6 +161,8 @@ public class MenuMovimiento {
 			}
 			return null;
 		}
+		
+		//LISTA MOVIMIENTOS
 		public static ArrayList <Movimiento> menuListaMovimientos(ArrayList <Movimiento> lista){
 			if(lista != null) {
 				ArrayList <Movimiento> movimientos = new ArrayList <Movimiento> (10);

@@ -8,6 +8,7 @@ import clases.Proveedor;
 
 public class ArchivoProveedor {
 	
+	//CREAR ARCHIVO
 	public static void crearArchivoProveedor() {
 		String ruta = "Carpeta General" + File.separator + "proveedor.dat";
 		File archivo = new File(ruta);
@@ -24,6 +25,7 @@ public class ArchivoProveedor {
 		}
 	}
 	
+	//ELIMINAR ARCHIVO
     public static void eliminarArchivoProveedor(String rutaArchivo) {
         File archivo = new File(rutaArchivo);
         if (archivo.exists()) {
@@ -38,6 +40,7 @@ public class ArchivoProveedor {
     }
 
 
+    //SERIALIZAR 
  	public static void guardarProveedores() {
  		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Carpeta General" + File.separator + "proveedor.dat"))) {
  			oos.writeObject(Proveedor.listaProveedores);
@@ -47,7 +50,7 @@ public class ArchivoProveedor {
  		}
  	}
 
- 	
+ 	//DESERIALIZAR
  	public static void cargarProveedores() {
  		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Carpeta General" + File.separator + "proveedor.dat"))) {
  			Proveedor.listaProveedores = (ArrayList <Proveedor>) ois.readObject();

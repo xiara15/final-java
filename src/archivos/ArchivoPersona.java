@@ -1,6 +1,5 @@
 package archivos;
 import java.io.File;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -11,64 +10,58 @@ import java.util.ArrayList;
 
 import clases.Persona;
 public class ArchivoPersona {
+	
+	// CREAR ARCHIVO
+	public static void crearArchivoPersona() {
+		String ruta = "Carpeta General" + File.separator + "persona.dat";
+		File archivo = new File(ruta);
+		if (archivo.exists()==false){
+			try {
+				if (archivo.createNewFile()) {
+					System.out.println("El archivo se creó con exito");
+				}
+			} catch (IOException error) {
+				System.out.println("ERROR: " + error.getMessage());
+			}
+		} else {
+			System.out.println("El archivo que intenta crear ya existe.");
+		}
+	}
+	
+	// ELIMINAR ARCHIVO
+	public static void eliminarArchivoPersona() {
+		String ruta = "Carpeta General" + File.separator + "persona.dat";
+		File miArchivo = new File (ruta);
+		if (miArchivo.exists()){
+			if (miArchivo.delete()) {
+				System.out.println("Se ha eliminado correctamente el archivo.");
+			} else {
+				System.out.println("No se ha podido eliminar el archivo.");
+			}
+		} else {
+			System.out.println("No se elimino nada porque no existe.");
+		}
+	}
 
-	    private static final String RUTA_ARCHIVO = "Carpeta General" + File.separator + "persona.dat";
+	// SERIALIZAR
+		public static void guardarPersonas() {
+			try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Carpeta General" + File.separator + "persona.dat"))) {
+			oos.writeObject(Persona.listaPersonas);
+			System.out.println("Archivos personas guardado correctamente.");
+			} catch (IOException error) {
+				System.out.println("Error al guardar: " + error.getMessage());
+		    }
+		}
 
-	    // CREAR ARCHIVO
-	    public static void crearArchivoPersona() {
-	        File archivo = new File(RUTA_ARCHIVO);
-	        if (!archivo.exists()) {
-	            try {
-	                if (archivo.createNewFile()) {
-	                    System.out.println("El archivo 'persona.dat' se creó con éxito.");
-	                }
-	            } catch (IOException e) {
-	                System.out.println("ERROR al crear el archivo: " + e.getMessage());
-	            }
-	        } else {
-	            System.out.println("El archivo 'persona.dat' ya existe.");
-	        }
-	    }
-
-	    // ELIMINAR ARCHIVO
-	    public static void eliminarArchivoPersona() {
-	        File archivo = new File(RUTA_ARCHIVO);
-	        if (archivo.exists()) {
-	            if (archivo.delete()) {
-	                System.out.println("El archivo 'persona.dat' fue eliminado correctamente.");
-	            } else {
-	                System.out.println("No se pudo eliminar el archivo.");
-	            }
-	        } else {
-	            System.out.println("El archivo no existe. No se eliminó nada.");
-	        }
-	    }
-
-	    // SERIALIZAR - GUARDAR LISTA
-	    public static void guardarPersonas() {
-	        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(RUTA_ARCHIVO))) {
-	            oos.writeObject(Persona.listaPersonas);
-	            System.out.println("Archivo 'persona.dat' guardado correctamente.");
-	        } catch (IOException e) {
-	            System.out.println("Error al guardar el archivo: " + e.getMessage());
-	        }
-	    }
-
-	    // DESERIALIZAR - CARGAR LISTA
-	    public static void cargarPersonas() {
-	        File archivo = new File(RUTA_ARCHIVO);
-	        if (!archivo.exists()) {
-	            System.out.println("No se encontró el archivo 'persona.dat' para cargar.");
-	            return;
-	        }
-
-	        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-	            Persona.listaPersonas = (ArrayList<Persona>) ois.readObject();
-	            System.out.println("Archivo 'persona.dat' cargado correctamente.");
-	        } catch (IOException e) {
-	            System.out.println("Error al cargar el archivo: " + e.getMessage());
-	        } catch (ClassNotFoundException e) {
-	            System.out.println("Clase no encontrada al cargar: " + e.getMessage());
-	        }
-	    }
+		// DESERIALIZAR
+		public static void cargarPersonas() {
+			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Carpeta General" + File.separator + "persona.dat"))) {
+				Persona.listaPersonas = (ArrayList <Persona>) ois.readObject();
+				System.out.println("Archivo persona cargado correctamente.");
+			} catch (IOException error) {
+				System.out.println("Error al cargar: " + error.getMessage());
+			} catch (ClassNotFoundException error) {
+				System.out.println("Clase no encontrada: " + error.getMessage());
+			}
+		}
 	}

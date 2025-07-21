@@ -10,6 +10,7 @@ import clases.Cliente;
 
 public class ArchivoCliente {
 
+	//CREAR ARCHIVO CLIENTE 
 	public static void crearArchivoCliente() {
 		String ruta = "Carpeta General" + File.separator + "cliente.dat";
 		File archivo = new File(ruta);
@@ -26,6 +27,8 @@ public class ArchivoCliente {
 		}
 	}
 
+	
+	//ELIMINAR ARCHIVO CLIENTE 
     public static void eliminarArchivoCliente(String rutaArchivo) {
         File archivo = new File(rutaArchivo);
         if (archivo.exists()) {
@@ -39,6 +42,7 @@ public class ArchivoCliente {
         }
     }
 
+    //SERLIALIZAR
     public static void guardarClientes() {
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("Carpeta General" + File.separator + "cliente.dat"))) {
 			oos.writeObject(Cliente.listaClientes);
@@ -51,7 +55,7 @@ public class ArchivoCliente {
 	// DESERIALIZAR
 	public static void cargarClientes() {
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Carpeta General" + File.separator + "cliente.dat"))) {
-			Cliente.listaClientes = extracte(ois);
+			Cliente.listaClientes = (ArrayList <Cliente>) ois.readObject();
 			System.out.println("Archivo cliente cargado correctamente.");
 		} catch (IOException error) {
 			System.out.println("Error al cargar: " + error.getMessage());
@@ -60,8 +64,5 @@ public class ArchivoCliente {
 		}
 	}
 
-	private static ArrayList<Cliente> extracte(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-		ArrayList <Cliente> object = extracte(ois);
-		return object;
-	}
+	
 }

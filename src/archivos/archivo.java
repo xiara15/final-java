@@ -2,10 +2,11 @@ package archivos;
 
 import java.io.File;
 import java.io.IOException;
-
+import FinalprogramacionII.MetodosGeneral;
 
 public class archivo {
 		
+	//CREAR CARPETA
 		public static void crearCarpeta (String ruta) {
 			File miArchivo = new File (ruta);
 				
@@ -13,10 +14,35 @@ public class archivo {
 					System.out.println("La carpeta fue creada con exito.");
 				} else {
 					
-					System.out.println("No se pudo crear la carpeta, revise path y/o permisos.");
+					System.out.println("No se pudo crear la carpeta.");
 				}
 		}
 		
+		//ELIMINAR CARPETA
+		public static void eliminarCarpeta(String ruta) {
+		    File carpeta = new File(ruta);
+		    if (carpeta.exists()) {
+		        eliminarRecursivo(carpeta);
+		        System.out.println("La carpeta ha sido eliminada correctamente.");
+		    } else {
+		        System.out.println("No se elimino nada porque la carpeta no existe.");
+		    }
+		}
+
+		//ELIMINAR RECURSIVO
+		private static void eliminarRecursivo(File carpeta) {
+		    if (carpeta.isDirectory()) {
+		        File[] Arregloarchivos = carpeta.listFiles();
+		        if (Arregloarchivos != null) {
+		            for (File file : Arregloarchivos) {
+		                eliminarRecursivo(file);
+		            }
+		        }
+		    }
+		    carpeta.delete();
+		}
+		
+		//CREAR ARCHIVO
 		public static void crearArchivo(String ruta) {
 			File miArchivo = new File (ruta);
 			try {
@@ -33,6 +59,7 @@ public class archivo {
 			}
 		}
 		
+		//ELIMINAR ARCHIVO
 		public static void eliminarArchivo(String ruta)
 		{
 			File miArchivo = new File (ruta);
@@ -45,35 +72,13 @@ public class archivo {
 					System.out.println("No se ha podido eliminar el archivo.");
 				}
 			} else {
-				System.out.println("No se elimino nada porque no existe.");
+				System.out.println("No se elimino nada porque no existe el archivo.");
 			}
 		}
 
 
-		public static void eliminarCarpeta(String ruta) {
-		    File carpeta = new File(ruta);
-		    if (carpeta.exists()) {
-		        eliminarRecursivo(carpeta);
-		        System.out.println("La carpeta ha sido eliminada correctamente.");
-		    } else {
-		        System.out.println("No se elimino nada porque la carpeta no existe.");
-		    }
-		}
 
-		private static void eliminarRecursivo(File carpeta) {
-		    if (carpeta.isDirectory()) {
-		        File[] Arregloarchivos = carpeta.listFiles();
-		        if (Arregloarchivos != null) {
-		            for (File file : Arregloarchivos) {
-		                eliminarRecursivo(file);
-		            }
-		        }
-		    }
-		    carpeta.delete();
-		}
-
-		
-		
+		//GUARDAR DATOS
 		public static void guardarDatos() {
 			File carpeta = new File("Carpeta General");
 		    if (carpeta.exists() == false) {
@@ -91,11 +96,40 @@ public class archivo {
 					ArchivoUsuario.crearArchivoUsuario();
 		    	}
 		    }
+		    ArchivoPersona.guardarPersonas();
+			ArchivoEmpleado.guardarEmpleados();
+			ArchivoCliente.guardarClientes();
+			ArchivoProveedor.guardarProveedores();
+			ArchivoUsuario.guardarUsuarios();
+			ArchivoProducto.guardarProductos();
+			ArchivoMovimiento.guardarMovimientos();
+			ArchivoVenta.guardarVentas();
+			ArchivoCuentaCorriente.guardarCtaCtes();
+			ArchivoUsuario.guardarUsuarios();
+		}
 		
+		// CARGAR DATOS
+		public static void cargarDatos() {
+			File carpeta = new File("Carpeta General");
+		    if (carpeta.exists() == true && carpeta.length() != 0) {
+				ArchivoPersona.cargarPersonas();
+				ArchivoEmpleado.cargarEmpleados();
+				ArchivoCliente.cargarClientes();
+				ArchivoProveedor.cargarProveedores();
+				ArchivoUsuario.cargarUsuarios();
+				ArchivoProducto.cargarProductos();
+				ArchivoMovimiento.cargarMovimientos();
+				ArchivoVenta.cargarVentas();
+				ArchivoCuentaCorriente.cargarCtaCtes();
+				ArchivoUsuario.cargarUsuarios();
+		    }		
+			
+		}
 		
 	}
 		
-}
+
+
 		
 		
 		

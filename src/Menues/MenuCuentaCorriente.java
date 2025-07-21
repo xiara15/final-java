@@ -45,6 +45,7 @@ public class MenuCuentaCorriente {
 			Menu.menusDatos();
 		}
 				
+		//INGRESO CUENTA CORRIENTE
 		public static void menuIngresoCtaCte(ArrayList <CuentaCorriente> lista) {
 			System.out.println("Bienvenido al menú de ingreso de datos de cuenta/s:");
 			System.out.println("1 - Ingresar una cuenta.");
@@ -91,6 +92,7 @@ public class MenuCuentaCorriente {
 			Menu.menusIngresar();
 		}
 		
+		//MENU CUENTA CORRIENTE
 		public static void menuCtaCte(CuentaCorriente ctacte, ArrayList <CuentaCorriente> lista) {
 			if(ctacte != null && lista != null) {
 				System.out.println("Bienvenido al menú general de cuenta/s:");
@@ -125,6 +127,8 @@ public class MenuCuentaCorriente {
 			MenuCuentaCorriente.menuIngresoCtaCte(lista);
 		}
 		
+		
+		//SELECCION CUENTA CORRIENTE
 		public static CuentaCorriente menuSelectCtaCte(ArrayList <CuentaCorriente> lista) {
 			if(lista != null) {
 				int cont = 1, limit = lista.size();

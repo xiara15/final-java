@@ -75,7 +75,7 @@ public class Menu {
                 MenuEmpleado.menuDatosEmpleado(Empleado.listaEmpleados);
                 break;
             case 3:
-                MenuUsuario.menuDatosUsuario(Usuario.listaDeusuarios);
+                MenuUsuario.menuDatosUsuario(Usuario.listaUsuarios);
                 break;
             case 4:
                 MenuProducto.menuDatosProducto(Producto.listaProducto);
@@ -130,7 +130,7 @@ public class Menu {
                 MenuEmpleado.menuIngresoEmpleado(Empleado.listaEmpleados);
                 break;
             case 3:
-                MenuUsuario.menuIngresoUsuario(Usuario.listaDeusuarios);
+                MenuUsuario.menuIngresoUsuario(Usuario.listaUsuarios);
                 break;
             case 4:
                 MenuProducto.menuIngresoProducto(Producto.listaProducto);
@@ -212,7 +212,6 @@ public class Menu {
             case 11:
                 break;
         }
-
-        menuPrincipal();
+		Menu.menuPrincipal();
     }
 }

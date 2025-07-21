@@ -18,12 +18,14 @@ public class ArchivoUsuario {
 						System.out.println("El archivo se creó con exito");
 					}
 				} catch (IOException error) {
-					System.out.println("ERROR: " + error.getMessage());
+					System.out.println("Error al crear el archivo " + error.getMessage());
 				}
 			} else {
 				System.out.println("El archivo que intenta crear ya existe.");
 			}
 		}
+		
+		//ELIMINAR ARCHIVO
     public static void eliminarArchivoUsuario(String rutaArchivo) {
         File archivo = new File(rutaArchivo);
         if (archivo.exists()) {
@@ -37,11 +39,12 @@ public class ArchivoUsuario {
         }
     }
 
+    //SERIALIZAR 
     public static void guardarUsuarios() {
         try (ObjectOutputStream oos = new ObjectOutputStream(
                 new FileOutputStream("Carpeta General" + File.separator + "usuario.dat"))) {
             
-            oos.writeObject(Usuario.listaDeusuarios);
+            oos.writeObject(Usuario.listaUsuarios);
             System.out.println("Archivo usuario guardado correctamente.");
             
         } catch (IOException error) {
@@ -49,10 +52,10 @@ public class ArchivoUsuario {
         }
     }
 
-	
+	//DESERIALIZAR
 	public static void cargarUsuarios() {
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("Carpeta General" + File.separator + "usuario.dat"))) {
-			Usuario.listaDeusuarios = (ArrayList <Usuario>) ois.readObject();
+			Usuario.listaUsuarios = (ArrayList <Usuario>) ois.readObject();
 			System.out.println("Archivo usuario cargado correctamente.");
 		} catch (IOException error) {
 			System.out.println("Error al cargar: " + error.getMessage());

@@ -1,9 +1,11 @@
+
 package Menues;
 
 import java.util.ArrayList;
 
 import clases.Persona;
 import FinalprogramacionII.MetodosGeneral;
+
 public class MenuPersona {
 	
 	//MENUS PERSONA
@@ -42,6 +44,8 @@ public class MenuPersona {
 			Menu.menusDatos();
 		}
 				
+		
+		//INGRESO PERSONA
 		public static void menuIngresoPersona(ArrayList <Persona> lista) {
 			System.out.println("Bienvenido al menú de ingreso de datos de persona/s:");
 			System.out.println("1 - Ingresar una persona.");
@@ -98,6 +102,8 @@ public class MenuPersona {
 			Menu.menusIngresar();
 		}
 		
+		
+		//MENU PERSONA
 		public static void menuPesona(Persona persona, ArrayList <Persona> lista) {
 			if(persona != null && lista != null) {
 				System.out.println("Bienvenido al menú general de persona/s:");
@@ -137,6 +143,7 @@ public class MenuPersona {
 			MenuPersona.menuIngresoPersona(lista);
 		}
 		
+		//SELECCIONAR PERSONA
 		public static Persona menuSelectPersona(ArrayList <Persona> lista) {
 			if(lista != null) {
 				int cont = 1, limit = lista.size();

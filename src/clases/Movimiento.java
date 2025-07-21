@@ -12,12 +12,16 @@ public class Movimiento implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+    public static ArrayList<Movimiento>listaMovimiento = new ArrayList<>();
+		
+    //ATRIBUTOS
 		private static int codigo;
 	    private static String detalle;
 	    private double montoDebe;
 	    private static double montoHaber;
 	    private static double saldo;
 
+	    //CONSTRUCTOR
 	    public Movimiento(int codigo, String detalle, double montoDebe, double montoHaber, double saldo) {
 	        Movimiento.codigo = codigo;
 	        Movimiento.detalle = detalle;
@@ -27,9 +31,7 @@ public class Movimiento implements Serializable{
 	    }
 	    
 	
-	    public static ArrayList<Movimiento>listaMovimiento = new ArrayList<>();
-	
-		private static Scanner teclado;
+	   //GET Y SET
 
 		public static int getCodigo() {
 			return codigo;
@@ -80,15 +82,18 @@ public class Movimiento implements Serializable{
 		}
 
 		
-//metodos personales de movimiento
+//metodos
 		
+		
+		//ALTA MOVIMIENTO
 	    public static Movimiento altaMovimiento(){
-	        try (Scanner entrada = new Scanner(System.in)) {
+	        Scanner entrada = new Scanner(System.in);
+	        
 				int codigo = Excepciones.castearEntero("ingrese el codigo de movimiento: ");
 
 				System.out.println("Ingrese detalle del movimiento:");
-				teclado = null;
-				detalle = teclado.nextLine();
+				entrada = null;
+				detalle = entrada.nextLine();
 
 				System.out.println("detalles del movimineto");
 				String detalle = entrada.nextLine();
@@ -103,8 +108,8 @@ public class Movimiento implements Serializable{
 				return nuevoMovimiento;
 			}
 			
-	    }
 	    
+	    //DATOS MOVIMIENTO
 	    public Movimiento datosMovimiento(Movimiento mov) {
 	        if (mov != null) {
 	            System.out.println("Datos del movimiento:");
@@ -120,6 +125,8 @@ public class Movimiento implements Serializable{
 	        return mov;
 	    }
 
+	    
+	    //MODIFICAR MOVIMINETO
 		public void modificarMovimiento(Movimiento elemento){
 	        try (Scanner entrada = new Scanner(System.in)) {
 				int codigo = Excepciones.castearEntero("ingrese el codigo del movimiento: ");
@@ -146,6 +153,8 @@ public class Movimiento implements Serializable{
 				System.out.println("movimiento modificado con exito");
 	    }
 	    
+		
+		//BAJA MOVIMIENTO
 	    public void bajaMovimiento(Movimiento elemento){
 	        int codigo = Excepciones.castearEntero("ingrese el codigo del movimiento a eliminar: ");
 	        Movimiento movimientoExistente = null;
@@ -164,7 +173,7 @@ public class Movimiento implements Serializable{
 	    }
 
 
-
+        //LISTAR MOVIMIENTO
 	    public static void listarMovimientos() {
 	        if (listaMovimiento != null && !listaMovimiento.isEmpty()) {
 	            for (Movimiento elemento : listaMovimiento) {
@@ -175,10 +184,11 @@ public class Movimiento implements Serializable{
 	        }
 	    }
 		
+	    
+	    //BUSCAR MOVIMIENTO
 	    public static Movimiento buscarMovimiento() {
 	        int codigo;
-	        String codigoAux = null;
-	        codigo = MetodosGeneral.castearEntero("Ingrese el código del producto a buscar: ", codigoAux);
+	        codigo = MetodosGeneral.castearEntero("Ingrese el código del producto a buscar: ", detalle);
 
 	        for (Movimiento elemento : listaMovimiento) {
 	            if (codigo == Movimiento.getCodigo()) {
@@ -191,6 +201,8 @@ public class Movimiento implements Serializable{
 	        return null;
 	    }
 		
+	    
+	    //CREAR MOVIMIENTO
 		public static ArrayList <Movimiento> crearMovimientos (Movimiento...movimientos){
 			if(movimientos != null) {
 				ArrayList <Movimiento> listarMovimientos = new ArrayList <Movimiento> ();
